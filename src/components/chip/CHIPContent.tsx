@@ -446,6 +446,7 @@ function SilkCanvas() {
       speed: number;
       offset: number;
       color: string;
+      width: number;
     };
     let lines: SilkLine[] = [];
 
@@ -453,15 +454,16 @@ function SilkCanvas() {
       lines = [];
       const count = 8;
       const centerY = height * 0.45;
-      const spread = height * 0.12;
+      const spread = height * 0.15;
       for (let i = 0; i < count; i++) {
         lines.push({
           y: centerY + (Math.random() - 0.5) * spread,
-          amp: 30 + Math.random() * 50,
-          freq: 0.001 + Math.random() * 0.002,
-          speed: 0.0004 + Math.random() * 0.0006,
+          amp: 40 + Math.random() * 60,
+          freq: 0.0008 + Math.random() * 0.0012,
+          speed: 0.00015 + Math.random() * 0.00015,
           offset: Math.random() * Math.PI * 2,
           color: i % 2 === 0 ? "#E8E0D8" : "#DBD0C6",
+          width: 20 + Math.random() * 20,
         });
       }
     }
@@ -484,7 +486,12 @@ function SilkCanvas() {
           const y =
             line.y +
             Math.sin(x * line.freq + time * line.speed + line.offset) *
-              line.amp;
+              line.amp *
+              Math.sin(x * line.freq * 0.3 + time * line.speed * 0.5 + line.offset * 2) *
+              0.5 +
+            Math.sin(x * line.freq + time * line.speed + line.offset) *
+              line.amp *
+              0.5;
           if (first) {
             ctx!.moveTo(x, y);
             first = false;
@@ -493,8 +500,8 @@ function SilkCanvas() {
           }
         }
         ctx!.strokeStyle = line.color;
-        ctx!.globalAlpha = 0.6;
-        ctx!.lineWidth = 25 + Math.random() * 15;
+        ctx!.globalAlpha = 0.55;
+        ctx!.lineWidth = line.width;
         ctx!.lineCap = "round";
         ctx!.lineJoin = "round";
         ctx!.stroke();
