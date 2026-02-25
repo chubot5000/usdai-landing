@@ -1,0 +1,219 @@
+@import "tailwindcss";
+@import "simplebar-react/dist/simplebar.min.css";
+
+:root {
+  /* Primary Colors */
+  --color-cream: #fff1e5;
+  --color-primary: #655343;
+  --color-secondary: #a99482;
+  --color-dark: #2f2823;
+  --color-dark-primary: #1d1a19;
+
+  /* Outline Colors */
+  --color-outline-major: #a6a09b;
+  --color-outline-minor: #d6d3d1;
+  --color-outline-subtle: #ebe9e8;
+
+  /* Background Colors */
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Feature Card Background */
+  --color-feature-bg: #f7f3ee;
+
+  /* SEO Page Colors */
+  --color-text-muted: #79716b;
+  --color-feldspar-dust: #dbd0c6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-cream: var(--color-cream);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-dark: var(--color-dark);
+  --color-dark-primary: var(--color-dark-primary);
+  --color-outline-major: var(--color-outline-major);
+  --color-outline-minor: var(--color-outline-minor);
+  --color-outline-subtle: var(--color-outline-subtle);
+  --color-feature-bg: var(--color-feature-bg);
+  --color-text-muted: var(--color-text-muted);
+  --color-feldspar-dust: var(--color-feldspar-dust);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* SimpleBar custom styling - macOS-like brown scrollbar */
+.simplebar-track {
+  background: transparent;
+}
+
+.simplebar-track.simplebar-vertical {
+  width: 10px;
+  right: 0;
+}
+
+.simplebar-track.simplebar-horizontal {
+  height: 10px;
+  bottom: 0;
+}
+
+/* Scrollbar styling with macOS-like auto-hide */
+.simplebar-scrollbar {
+  right: 2px;
+  width: 11px;
+}
+
+.simplebar-scrollbar::before {
+  background-color: #a99482;
+  border-radius: 7px;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* Show scrollbar when scrolling */
+.simplebar-scrollbar.simplebar-visible::before {
+  opacity: 0.7;
+}
+
+/* Darker on hover */
+.simplebar-scrollbar:hover::before {
+  background-color: #8b7355;
+  opacity: 1 !important;
+}
+
+/* Fallback for native scrollbars (if SimpleBar not applied) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #a99482;
+  border-radius: 7px;
+  opacity: 0.6;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8b7355;
+  opacity: 1;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #a99482 transparent;
+}
+
+/* Custom font classes */
+.font-eiko {
+  font-family: "PP Eiko", Georgia, serif;
+}
+
+.font-swiss {
+  font-family: "Swiss Now", Arial, sans-serif;
+}
+
+/* Dotted background pattern - Horizontal hexagonal pattern */
+.bg-dotted {
+  background-image:
+    radial-gradient(circle, #f7efe8 1px, transparent 1px),
+    radial-gradient(circle, #f7efe8 1px, transparent 1px);
+  background-size:
+    4px 7px,
+    4px 7px;
+  background-position:
+    0 0,
+    2px 3.5px;
+}
+
+/* News ticker animation for backers logos */
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker 20s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Progress bar fill animation for steps */
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-progress-fill {
+  animation: progress-fill 4.8s linear forwards;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Horizontal scroll fade edges */
+.scroll-fade-edges {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 24px,
+    black calc(100% - 24px),
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 24px,
+    black calc(100% - 24px),
+    transparent
+  );
+}
+
+/* Hero glyph floating animation (SEO pages) */
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-hero-float {
+  animation: heroFloat 5s ease-in-out infinite;
+}

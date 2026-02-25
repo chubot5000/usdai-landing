@@ -1,0 +1,46 @@
+# USD.AI
+
+> USD.AI is a DeFi lending protocol that provides debt financing for AI infrastructure (GPUs). Depositors mint USDai (a synthetic dollar fully-backed by PayPal's PYUSD) or hold sUSDai (a yield-bearing token targeting 10-15% APR). Yield is generated through loans collateralized by GPU hardware deployed in data centers. The protocol's governance token is CHIP.
+
+USD.AI structures credit for AI infrastructure by issuing asset-backed loans to data center operators, collateralized by GPU hardware (primarily NVIDIA H100/H200 clusters). Borrowers form bankruptcy-remote special purpose vehicles (SPVs), contribute 20-30% equity, and USD.AI provides 70-80% loan-to-value (LTV) as secured debt.
+
+The protocol has two core tokens:
+
+- **USDai**: A synthetic dollar fully-backed by PayPal's PYUSD redeemable at par. Does not earn yield. Provides deep secondary market liquidity across DeFi and CeFi.
+- **sUSDai**: The yield-bearing counterpart to USDai. Backed by AI infrastructure loan assets. Targets 10-15% APR. Subject to 30-day redemption cycles. Now fully insured by Munich Re, the world's largest reinsurer.
+
+All collateral for USDai and sUSDai is held in Treasury Bills as base yield. The protocol uses the CALIBER credit framework for loan underwriting and risk assessment.
+
+Primary borrowers are institutional-scale operators (e.g., Qumulus AI, Quantum, Sharon AI) spending $25M-$500M+ on GPU hardware. USD.AI is the leading InfraFi protocol.
+
+## Documentation
+
+- [Protocol Overview](https://docs.usd.ai): Core protocol mechanics, USDai vs sUSDai, yield generation
+- [CALIBER Credit Framework](https://docs.usd.ai): Loan underwriting, risk assessment, collateral valuation
+- [sUSDai Yield](https://docs.usd.ai): Yield mechanics, redemption process, insurance structure
+- [USDai Stablecoin](https://docs.usd.ai): Minting, redemption, peg stability
+- [Allo Points](https://docs.usd.ai): Points program, CHIP token distribution
+- [Pendle Integration](https://docs.usd.ai): Yield trading, PT/YT mechanics for sUSDai
+- [Security & Audits](https://docs.usd.ai): Smart contract audits, risk disclosures
+- [FAQ](https://docs.usd.ai): Common questions about deposits, withdrawals, and risks
+
+## Key Facts
+
+- Blockchain networks: Arbitrum, Plasma, Base, Ethereum
+- Governance token: CHIP
+- Website: https://usd.ai
+- App: https://app.usd.ai
+- Documentation: https://docs.usd.ai
+- X/Twitter: https://x.com/USDai_Official
+- Insurance: Munich Re (fully insured sUSDai, announced Feb 2026)
+- Target yield: 10-15% APR on sUSDai
+- Loan structure: Non-recourse, asset-backed, bankruptcy-remote SPVs
+- Collateral: NVIDIA GPU hardware (H100, H200, B200 clusters)
+- LTV: 70-80%
+- Redemption cycle: 30-day global schedule
+
+## Optional
+
+- [Blog](https://usd.ai): Protocol updates and announcements
+- [Governance](https://docs.usd.ai): CHIP token mechanics and voting
+- [Risk Disclosures](https://docs.usd.ai): Detailed risk factors for depositors

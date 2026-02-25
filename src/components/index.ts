@@ -1,0 +1,9 @@
+export { default as Navigation } from "./Navigation";
+export { default as HeroSection } from "./HeroSection";
+export { default as BackersTicker } from "./BackersTicker";
+export { default as FeaturesSection } from "./FeaturesSection";
+export { default as GlobalReachSection } from "./GlobalReachSection";
+export { default as ProcessSection } from "./ProcessSection";
+export { default as FeaturedInsightsSection } from "./FeaturedInsightsSection";
+export { default as CTASection } from "./CTASection";
+export { default as Footer } from "./Footer";
