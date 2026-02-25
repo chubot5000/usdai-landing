@@ -453,13 +453,13 @@ function SilkCanvas() {
     function initLines() {
       lines = [];
       const count = 8;
-      const centerY = height * 0.45;
-      const spread = height * 0.15;
+      const centerY = height * 0.62;
+      const spread = height * 0.14;
       for (let i = 0; i < count; i++) {
         lines.push({
           y: centerY + (Math.random() - 0.5) * spread,
-          amp: 40 + Math.random() * 60,
-          freq: 0.0008 + Math.random() * 0.0012,
+          amp: 80 + Math.random() * 120,
+          freq: 0.0015 + Math.random() * 0.002,
           speed: 0.00015 + Math.random() * 0.00015,
           offset: Math.random() * Math.PI * 2,
           color: i % 2 === 0 ? "#E8E0D8" : "#DBD0C6",
