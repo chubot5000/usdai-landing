@@ -12,7 +12,6 @@ import {
 } from "@/hooks/useAnimateOnScroll";
 import { EXTERNAL_LINKS } from "@/lib/constants";
 import Image from "next/image";
-import { useRef, useEffect, useState } from "react";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -659,14 +658,14 @@ function TractionSection() {
   );
 }
 
-function RevenueSection({ isDark }: { isDark: boolean }) {
+function RevenueSection() {
   return (
     <section className="py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <Tag className={`mb-5 ${isDark ? "!border-white/20 !text-white/70" : ""}`}>How It Works</Tag>
-      <h2 className={`font-eiko font-light text-[38px] leading-[1.15] mb-[18px] transition-colors duration-500 ${isDark ? "text-white" : "text-dark"}`}>
+      <Tag className="mb-5">How It Works</Tag>
+      <h2 className="font-eiko font-light text-[38px] text-dark leading-[1.15] mb-[18px]">
         Real revenue from real infrastructure
       </h2>
-      <p className={`text-[15px] leading-[1.75] max-w-[600px] mb-12 transition-colors duration-500 ${isDark ? "text-white/50" : "text-text-muted"}`}>
+      <p className="text-[15px] text-text-muted leading-[1.75] max-w-[600px] mb-12">
         USD.AI captures fees on origination and net interest margin. Risk is
         managed through first-loss curators who take illiquid positions and
         often originate loans.
@@ -676,15 +675,15 @@ function RevenueSection({ isDark }: { isDark: boolean }) {
         {REVENUE_STEPS.map((step) => (
           <div
             key={step.num}
-            className={`px-8 py-9 border-t-2 transition-colors duration-500 ${isDark ? "border-white/15 hover:border-white/30" : "border-outline-minor hover:border-secondary"}`}
+            className="px-8 py-9 border-t-2 border-outline-minor transition-colors duration-300 hover:border-secondary"
           >
-            <span className={`font-eiko text-[36px] font-light mb-4 block transition-colors duration-500 ${isDark ? "text-[#A99482]" : "text-feldspar-dust"}`}>
+            <span className="font-eiko text-[36px] font-light text-feldspar-dust mb-4 block">
               {step.num}
             </span>
-            <h4 className={`font-eiko text-[20px] font-normal mb-2.5 transition-colors duration-500 ${isDark ? "text-white" : "text-dark"}`}>
+            <h4 className="font-eiko text-[20px] font-normal text-dark mb-2.5">
               {step.title}
             </h4>
-            <p className={`text-[13px] leading-[1.65] transition-colors duration-500 ${isDark ? "text-white/50" : "text-text-muted"}`}>
+            <p className="text-[13px] text-text-muted leading-[1.65]">
               {step.description}
             </p>
           </div>
@@ -726,49 +725,6 @@ function CTASection() {
   );
 }
 
-// ─── Dark Transition Wrapper ─────────────────────────────────────────────────
-
-function DarkTransitionWrapper({ children }: { children: (isDark: boolean) => React.ReactNode }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-
-      const rect = sectionRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-
-      // Trigger dark mode when the section enters the top half of the viewport
-      const isInView = rect.top < viewportHeight * 0.5 && rect.bottom > 0;
-      const isPastSection = rect.bottom < 0;
-
-      setIsDark(isInView || isPastSection);
-    };
-
-    handleScroll();
-
-    // Listen to scroll on SimpleBar's scroll container (used by the main layout)
-    const scrollElement = document.querySelector(".simplebar-content-wrapper");
-    if (scrollElement) {
-      scrollElement.addEventListener("scroll", handleScroll, { passive: true });
-      return () => scrollElement.removeEventListener("scroll", handleScroll);
-    } else {
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
-  }, []);
-
-  return (
-    <div
-      ref={sectionRef}
-      className={`w-full transition-colors duration-500 ${isDark ? "bg-[#2f2823]" : "bg-white"}`}
-    >
-      {children(isDark)}
-    </div>
-  );
-}
-
 // ─── Main Component ──────────────────────────────────────────────────────────
 
 export default function CHIPContent() {
@@ -781,16 +737,9 @@ export default function CHIPContent() {
         <ProblemSection />
         <GovernanceSection />
         <TractionSection />
+        <RevenueSection />
+        <CTASection />
       </div>
-
-      <DarkTransitionWrapper>
-        {(isDark) => (
-          <>
-            <RevenueSection isDark={isDark} />
-            <CTASection />
-          </>
-        )}
-      </DarkTransitionWrapper>
 
       <Footer />
     </>
