@@ -858,10 +858,10 @@ function RevenueSection({ isDark }: { isDark: boolean }) {
 
       {/* Steps with timeline connector */}
       <div className="relative grid grid-cols-3 gap-6 max-lg:grid-cols-1">
-        {/* Sweeping accent line — centered with step circles */}
+        {/* Sweeping accent line — centered with step circles (py-9=36px + 28px half circle) */}
         <div
-          className={`absolute h-px line-sweep max-lg:hidden transition-colors duration-500 ${isDark ? "bg-[#A99482]" : "bg-[#A99482]"}`}
-          style={{ top: "36px" }}
+          className="absolute h-px bg-[#A99482] line-sweep max-lg:hidden z-0"
+          style={{ top: "64px" }}
         />
         {REVENUE_STEPS.map((step, i) => (
           <div
@@ -872,7 +872,7 @@ function RevenueSection({ isDark }: { isDark: boolean }) {
             {i < REVENUE_STEPS.length - 1 && (
               <div
                 className={`absolute h-px transition-colors duration-500 max-lg:hidden ${isDark ? "bg-white/15" : "bg-outline-minor"}`}
-                style={{ top: "36px", left: "calc(32px + 56px)", right: "-32px" }}
+                style={{ top: "64px", left: "calc(32px + 56px)", right: "-32px" }}
               />
             )}
             {/* Step number circle */}
