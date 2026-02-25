@@ -511,8 +511,20 @@ function HeroSection() {
 
 function StatementSection() {
   return (
-    <section className="bg-white py-[100px] px-20 max-lg:py-[80px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <div className="text-center mb-[72px]">
+    <section className="relative bg-white py-[100px] px-20 overflow-hidden max-lg:py-[80px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
+      {/* Subtle diagonal hatching texture */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(-45deg, rgba(169,148,130,0.06) 0, rgba(169,148,130,0.06) 1px, transparent 1px, transparent 8px)",
+          maskImage:
+            "radial-gradient(ellipse at 50% 50%, black 0%, transparent 70%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse at 50% 50%, black 0%, transparent 70%)",
+        }}
+      />
+      <div className="relative z-10 text-center mb-[72px]">
         <h2 className="font-eiko font-light text-[clamp(32px,4.5vw,56px)] text-dark leading-[1.15] max-w-[800px] mx-auto mb-6">
           The only token that captures real AI infrastructure growth
         </h2>
@@ -524,11 +536,11 @@ function StatementSection() {
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-8 max-w-[1100px] mx-auto max-lg:gap-5 max-sm:grid-cols-1 max-sm:gap-4">
+      <div className="relative z-10 grid grid-cols-3 gap-8 max-w-[1100px] mx-auto max-lg:gap-5 max-sm:grid-cols-1 max-sm:gap-4">
         {STATEMENT_CARDS.map((card) => (
           <div
             key={card.num}
-            className="text-center px-7 py-10 border border-outline-minor rounded-xl transition-all duration-300 hover:border-secondary hover:shadow-[0_8px_32px_rgba(47,40,35,0.06)]"
+            className="text-center px-7 py-10 bg-white border border-outline-minor rounded-xl transition-all duration-300 hover:border-secondary hover:shadow-[0_8px_32px_rgba(47,40,35,0.06)]"
           >
             <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-feature-bg text-primary text-[16px] font-semibold mb-5">
               {card.num}
@@ -548,33 +560,50 @@ function StatementSection() {
 
 function ProblemSection() {
   return (
-    <section className="py-[100px] px-20 bg-[#2f2823] max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <div className="max-w-[560px] mb-16">
-        <Tag className="mb-5 !border-white/20 !text-white/70">The Problem</Tag>
-        <h2 className="font-eiko font-light text-[38px] text-white leading-[1.15] mb-[18px]">
-          Capital can&apos;t keep pace with compute
-        </h2>
-        <p className="text-[15px] text-white/50 leading-[1.75]">
-          GPUs depreciate at roughly 20% per year, but traditional credit
-          infrastructure moves at the wrong tempo for hardware that&apos;s
-          obsolete in three years.
-        </p>
-      </div>
+    <section className="w-full bg-white p-[10px]">
+      <div className="relative w-full overflow-hidden rounded-[21px] bg-[#2f2823]">
+        {/* Diagonal hatching texture */}
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(-45deg, rgba(169,148,130,0.08) 0, rgba(169,148,130,0.08) 1px, transparent 1px, transparent 6px)",
+            maskImage:
+              "radial-gradient(ellipse at 85% 25%, black 0%, transparent 55%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse at 85% 25%, black 0%, transparent 55%)",
+          }}
+        />
 
-      <div className="grid grid-cols-2 gap-6 max-lg:grid-cols-1">
-        {PROBLEM_CARDS.map((card) => (
-          <div
-            key={card.title}
-            className="px-8 py-9 border-t-2 border-white/15 transition-colors duration-300 hover:border-[#A99482]"
-          >
-            <h4 className="font-eiko text-[20px] font-normal text-white mb-2.5">
-              {card.title}
-            </h4>
-            <p className="text-[13px] text-white/50 leading-[1.65]">
-              {card.description}
+        <div className="relative z-10 py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
+          <div className="max-w-[560px] mb-16">
+            <Tag className="mb-5 !border-white/20 !text-white/70">The Problem</Tag>
+            <h2 className="font-eiko font-light text-[38px] text-white leading-[1.15] mb-[18px]">
+              Capital can&apos;t keep pace with compute
+            </h2>
+            <p className="text-[15px] text-white/50 leading-[1.75]">
+              GPUs depreciate at roughly 20% per year, but traditional credit
+              infrastructure moves at the wrong tempo for hardware that&apos;s
+              obsolete in three years.
             </p>
           </div>
-        ))}
+
+          <div className="grid grid-cols-2 gap-6 max-lg:grid-cols-1">
+            {PROBLEM_CARDS.map((card) => (
+              <div
+                key={card.title}
+                className="px-8 py-9 border-t-2 border-white/15 transition-colors duration-300 hover:border-[#A99482]"
+              >
+                <h4 className="font-eiko text-[20px] font-normal text-white mb-2.5">
+                  {card.title}
+                </h4>
+                <p className="text-[13px] text-white/50 leading-[1.65]">
+                  {card.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -585,17 +614,17 @@ function GovernanceSection() {
     <section
       className="relative py-[100px] px-20 bg-white overflow-hidden max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6"
     >
-      {/* Diagonal line background texture */}
+      {/* Grid texture overlay (QEV-style) */}
       <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 14px,
-            #655343 14px,
-            #655343 15px
-          )`,
+          backgroundImage:
+            "linear-gradient(rgba(169,148,130,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(169,148,130,0.12) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+          maskImage:
+            "radial-gradient(ellipse at 50% 50%, black 0%, transparent 75%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse at 50% 50%, black 0%, transparent 75%)",
         }}
       />
 
@@ -672,11 +701,16 @@ function TractionSection() {
         Building liquidity that didn&apos;t exist.
       </h2>
 
-      {/* Frame-within-frame stats card */}
+      {/* Frame-within-frame stats card with dividers */}
       <div className="border border-outline-minor rounded-[21px] p-10 bg-white max-sm:p-6">
-        <div className="grid grid-cols-4 gap-6 max-lg:grid-cols-2 max-sm:grid-cols-2 max-sm:gap-4">
-          {TRACTION_STATS.map((stat) => (
-            <StatCounter key={stat.label} stat={stat} isInView={isInView} />
+        <div className="grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-2">
+          {TRACTION_STATS.map((stat, i) => (
+            <div
+              key={stat.label}
+              className={`${i > 0 ? "border-l border-outline-minor max-lg:border-l-0" : ""} ${i === 1 ? "max-lg:border-l max-lg:border-outline-minor" : ""} ${i === 3 ? "max-lg:border-l max-lg:border-outline-minor" : ""} ${i >= 2 ? "max-lg:border-t max-lg:border-outline-minor max-lg:pt-6 max-lg:mt-6" : ""}`}
+            >
+              <StatCounter stat={stat} isInView={isInView} />
+            </div>
           ))}
         </div>
       </div>
@@ -697,18 +731,22 @@ function RevenueSection({ isDark }: { isDark: boolean }) {
         often originate loans.
       </p>
 
-      {/* Steps with connecting line */}
+      {/* Steps with timeline connector */}
       <div className="relative grid grid-cols-3 gap-6 max-lg:grid-cols-1">
-        {/* Horizontal connector line (desktop only) */}
-        <div className={`absolute top-[28px] left-[60px] right-[60px] h-px transition-colors duration-500 max-lg:hidden ${isDark ? "bg-white/15" : "bg-outline-minor"}`} />
-
-        {REVENUE_STEPS.map((step) => (
+        {REVENUE_STEPS.map((step, i) => (
           <div
             key={step.num}
             className="relative px-8 py-9"
           >
+            {/* Timeline connector line — centered with circles (desktop only) */}
+            {i < REVENUE_STEPS.length - 1 && (
+              <div
+                className={`absolute h-px transition-colors duration-500 max-lg:hidden ${isDark ? "bg-white/15" : "bg-outline-minor"}`}
+                style={{ top: "36px", left: "calc(32px + 56px)", right: "-32px" }}
+              />
+            )}
             {/* Step number circle */}
-            <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-6 transition-colors duration-500 ${isDark ? "bg-white/10 border border-white/15" : "bg-feature-bg border border-outline-minor"}`}>
+            <div className={`relative z-10 w-14 h-14 rounded-full flex items-center justify-center mb-6 transition-colors duration-500 ${isDark ? "bg-[#2f2823] border border-white/20" : "bg-white border border-outline-minor"}`}>
               <span className={`font-eiko text-[20px] font-light transition-colors duration-500 ${isDark ? "text-[#A99482]" : "text-feldspar-dust"}`}>
                 {step.num}
               </span>
@@ -727,32 +765,65 @@ function RevenueSection({ isDark }: { isDark: boolean }) {
 }
 
 function CTASection() {
+  const { ref, isInView } = useInView({ threshold: 0.3 });
+
   return (
-    <section className="py-[100px] px-20 text-center max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <h2 className="font-eiko font-light text-[clamp(28px,3.5vw,40px)] text-white mb-3.5">
-        The interest rate of AI, governed by its holders.
-      </h2>
-      <p className="text-[15px] text-white/40 mb-9 max-w-[460px] mx-auto leading-[1.7]">
-        CHIP tokenholders shape the protocol that defines GPU-backed lending.
-      </p>
-      <div className="flex gap-3.5 justify-center max-sm:flex-col max-sm:items-center">
-        <Button
-          href={EXTERNAL_LINKS.chipEligibility}
-          external
-          size="lg"
-          className="px-9 py-[15px] text-[15px]"
-        >
-          Check $CHIP Eligibility &rarr;
-        </Button>
-        <Button
-          href={EXTERNAL_LINKS.docs}
-          external
-          variant="ghost"
-          size="lg"
-          className="px-9 py-[15px] text-[15px]"
-        >
-          Read the Docs
-        </Button>
+    <section
+      ref={ref as React.RefObject<HTMLElement>}
+      className="w-full bg-white p-[10px]"
+    >
+      <div className="relative w-full h-[500px] sm:h-[650px] md:h-[700px] lg:h-[800px] overflow-hidden rounded-[21px]">
+        {/* Background Image */}
+        <div className="absolute inset-0 rounded-[17px] overflow-hidden">
+          <Image
+            src="/images/cta-bg.webp"
+            alt="Data center"
+            fill
+            className="object-cover rounded-[17px]"
+          />
+          <div className="absolute inset-0 bg-black/30 rounded-[17px]" />
+        </div>
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent to-black/40 rounded-[17px]" />
+
+        {/* Content */}
+        <div className="relative h-full flex flex-col items-center justify-center px-4 sm:px-8">
+          <h2
+            className={`font-eiko text-[24px] sm:text-[30px] md:text-[36px] lg:text-[40px] text-white text-center leading-normal max-w-[900px] mb-3.5 transition-all duration-700 ${
+              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
+          >
+            The interest rate of AI, governed by its holders.
+          </h2>
+          <p
+            className={`text-[15px] text-white/60 mb-9 max-w-[460px] text-center leading-[1.7] transition-all duration-700 delay-100 ${
+              isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
+          >
+            CHIP tokenholders shape the protocol that defines GPU-backed lending.
+          </p>
+          <div className="flex gap-3.5 justify-center max-sm:flex-col max-sm:items-center">
+            <Button
+              href={EXTERNAL_LINKS.chipEligibility}
+              external
+              variant="ghost"
+              size="lg"
+              className="px-9 py-[15px] text-[15px]"
+            >
+              Check $CHIP Eligibility &rarr;
+            </Button>
+            <Button
+              href={EXTERNAL_LINKS.docs}
+              external
+              color="var(--color-secondary)"
+              size="lg"
+              className="px-9 py-[15px] text-[15px]"
+            >
+              Read the Docs
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -813,13 +884,11 @@ export default function CHIPContent() {
 
       <ColorScrollWrapper>
         {(isDark) => (
-          <>
-            <RevenueSection isDark={isDark} />
-            <CTASection />
-          </>
+          <RevenueSection isDark={isDark} />
         )}
       </ColorScrollWrapper>
 
+      <CTASection />
       <Footer />
     </>
   );
