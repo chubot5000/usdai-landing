@@ -437,8 +437,10 @@ function SilkCanvas() {
     if (!ctx) return;
 
     let animationId: number;
+    let width = 0;
+    let height = 0;
     type SilkLine = {
-      x: number;
+      y: number;
       amp: number;
       freq: number;
       speed: number;
@@ -447,62 +449,52 @@ function SilkCanvas() {
     };
     let lines: SilkLine[] = [];
 
-    const colors = ["#A99482", "#655343", "#DBD0C6", "#2F2823", "#A99482"];
-
     function initLines() {
-      if (!canvas) return;
       lines = [];
-      const count = 12;
+      const count = 15;
+      // Cluster lines in the center area (40%-60% of height)
+      const centerY = height * 0.5;
+      const spread = height * 0.25;
       for (let i = 0; i < count; i++) {
         lines.push({
-          x: Math.random() * canvas.width,
-          amp: 40 + Math.random() * 80,
-          freq: 0.002 + Math.random() * 0.004,
-          speed: 0.0008 + Math.random() * 0.0015,
+          y: centerY + (Math.random() - 0.5) * spread,
+          amp: 50 + Math.random() * 100,
+          freq: 0.002 + Math.random() * 0.005,
+          speed: 0.001 + Math.random() * 0.002,
           offset: Math.random() * Math.PI * 2,
-          color: colors[i % colors.length],
+          color: i % 3 === 0 ? "#A99482" : "#655343",
         });
       }
     }
 
     function resize() {
-      if (!canvas || !container) return;
-      const rect = container.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const rect = container!.getBoundingClientRect();
+      width = canvas!.width = rect.width;
+      height = canvas!.height = rect.height;
       initLines();
     }
 
     function draw() {
-      if (!canvas || !ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx!.clearRect(0, 0, width, height);
       const time = Date.now();
 
       lines.forEach((line) => {
-        ctx.beginPath();
+        ctx!.beginPath();
+        ctx!.moveTo(width, line.y);
 
-        let firstPoint = true;
-        for (let y = canvas.height; y > -100; y -= 5) {
-          const x =
-            line.x +
-            Math.sin(y * line.freq + time * line.speed + line.offset) *
+        for (let x = width; x > -100; x -= 50) {
+          const y =
+            line.y +
+            Math.sin(x * line.freq + time * line.speed + line.offset) *
               line.amp;
-
-          if (firstPoint) {
-            ctx.moveTo(x, y);
-            firstPoint = false;
-          } else {
-            ctx.lineTo(x, y);
-          }
+          const opacity = Math.max(0, (x / width) * 0.5);
+          ctx!.strokeStyle = line.color;
+          ctx!.globalAlpha = opacity;
+          ctx!.lineTo(x, y);
         }
 
-        const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
-        gradient.addColorStop(0, line.color);
-        gradient.addColorStop(1, "transparent");
-        ctx.strokeStyle = gradient;
-        ctx.globalAlpha = 0.35;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
+        ctx!.lineWidth = 2;
+        ctx!.stroke();
       });
 
       animationId = requestAnimationFrame(draw);
