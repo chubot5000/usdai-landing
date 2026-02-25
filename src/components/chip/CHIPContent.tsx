@@ -424,35 +424,30 @@ function ChipTokenSVG() {
 
 // ─── Silk Canvas Animation ───────────────────────────────────────────────────
 
-function SilkCanvas({ className }: { className?: string }) {
+function SilkCanvas() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    const container = containerRef.current;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !container) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationId: number;
-    let lines: Array<{
+    type SilkLine = {
       x: number;
-      y: number;
       amp: number;
       freq: number;
       speed: number;
       offset: number;
       color: string;
-    }> = [];
+    };
+    let lines: SilkLine[] = [];
 
     const colors = ["#A99482", "#655343", "#DBD0C6", "#2F2823", "#A99482"];
-
-    function resize() {
-      if (!canvas) return;
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      initLines();
-    }
 
     function initLines() {
       if (!canvas) return;
@@ -461,7 +456,6 @@ function SilkCanvas({ className }: { className?: string }) {
       for (let i = 0; i < count; i++) {
         lines.push({
           x: Math.random() * canvas.width,
-          y: canvas.height + 100,
           amp: 40 + Math.random() * 80,
           freq: 0.002 + Math.random() * 0.004,
           speed: 0.0008 + Math.random() * 0.0015,
@@ -471,6 +465,14 @@ function SilkCanvas({ className }: { className?: string }) {
       }
     }
 
+    function resize() {
+      if (!canvas || !container) return;
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      initLines();
+    }
+
     function draw() {
       if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -478,19 +480,27 @@ function SilkCanvas({ className }: { className?: string }) {
 
       lines.forEach((line) => {
         ctx.beginPath();
-        ctx.moveTo(line.x, canvas.height);
 
-        for (let y = canvas.height; y > -100; y -= 40) {
+        let firstPoint = true;
+        for (let y = canvas.height; y > -100; y -= 5) {
           const x =
             line.x +
             Math.sin(y * line.freq + time * line.speed + line.offset) *
               line.amp;
-          const opacity = Math.max(0, (y / canvas.height) * 0.35);
-          ctx.strokeStyle = line.color;
-          ctx.globalAlpha = opacity;
-          ctx.lineTo(x, y);
+
+          if (firstPoint) {
+            ctx.moveTo(x, y);
+            firstPoint = false;
+          } else {
+            ctx.lineTo(x, y);
+          }
         }
 
+        const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
+        gradient.addColorStop(0, line.color);
+        gradient.addColorStop(1, "transparent");
+        ctx.strokeStyle = gradient;
+        ctx.globalAlpha = 0.35;
         ctx.lineWidth = 1.5;
         ctx.stroke();
       });
@@ -501,19 +511,19 @@ function SilkCanvas({ className }: { className?: string }) {
     resize();
     draw();
 
-    window.addEventListener("resize", resize);
+    const ro = new ResizeObserver(resize);
+    ro.observe(container);
+
     return () => {
-      window.removeEventListener("resize", resize);
+      ro.disconnect();
       cancelAnimationFrame(animationId);
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={className}
-      style={{ width: "100%", height: "100%" }}
-    />
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none">
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+    </div>
   );
 }
 
@@ -638,9 +648,7 @@ function StatementSection() {
   return (
     <section className="relative bg-white py-[100px] px-20 overflow-hidden max-lg:py-[80px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
       {/* Silk Canvas animation background */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
-        <SilkCanvas className="absolute inset-0" />
-      </div>
+      <SilkCanvas />
       <div className="relative z-10 text-center mb-[72px]">
         <h2 className="font-eiko font-light text-[clamp(32px,4.5vw,56px)] text-dark leading-[1.15] max-w-[800px] mx-auto mb-6">
           The only token that captures real AI infrastructure growth
