@@ -165,12 +165,14 @@ export default function BrandKitContent() {
     <div className="bg-white text-[#2F2823] leading-relaxed">
       <div className="max-w-[1200px] mx-auto px-10 py-[60px] md:px-10 sm:px-5">
         {/* Header */}
-        <div className="mb-3">
-          <HeaderLockup className="h-10 w-auto" />
+        <div className="text-center mb-[60px]">
+          <h1 className="font-eiko text-[clamp(48px,6vw,80px)] font-normal leading-[1.1] text-[#2F2823] mb-4">
+            Brand Kit
+          </h1>
+          <p className="text-base text-[#A99482] max-w-[480px] mx-auto">
+            Official logos, colors, and typography for USD.AI. For press, partners, and integrations.
+          </p>
         </div>
-        <p className="text-sm font-normal tracking-[2px] uppercase text-[#A99482] mb-[60px]">
-          Brand Kit
-        </p>
 
         {/* Lockups & Glyphs */}
         <section className="mb-20">
