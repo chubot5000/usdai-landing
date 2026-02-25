@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Footer from "@/components/Footer";
 import MobileNav from "@/components/MobileNav";
 import Navigation from "@/components/Navigation";
@@ -39,46 +38,6 @@ const DEFINE_STEPS: DefineStep[] = [
     title: "Earn as borrowers repay",
     description:
       "Loan repayments flow to sUSDai holders as yield. Idle capital earns T-Bill rates as a floor.",
-  },
-];
-
-interface DualCardData {
-  label: string;
-  name: string;
-  description: string;
-  traits: string[];
-  href: string;
-  variant: "dark" | "light";
-}
-
-const DUAL_CARDS: DualCardData[] = [
-  {
-    label: "Stablecoin",
-    name: "USDai",
-    description:
-      "A fully-backed synthetic dollar for liquidity, payments, and DeFi composability.",
-    traits: [
-      "Instantly redeemable at all times",
-      "Deep secondary market across DeFi + CeFi",
-      "No yield — optimized for stability",
-      "Low risk, stablecoin-grade",
-    ],
-    href: "/usdai",
-    variant: "dark",
-  },
-  {
-    label: "Yield-Bearing",
-    name: "sUSDai",
-    description:
-      "A yield-bearing synthetic dollar backed by GPU-collateralized loans financing AI infrastructure.",
-    traits: [
-      "Targeting 10–15% APR",
-      "Backed by real AI hardware assets",
-      "Senior tranche — FiLo curators absorb losses first",
-      "Structured redemptions via QEV",
-    ],
-    href: "/susdai",
-    variant: "light",
   },
 ];
 
@@ -163,99 +122,6 @@ const HOWTO_CARDS: HowToCard[] = [
 ];
 
 // ─── SVG Components ──────────────────────────────────────────────────────────
-
-function USDaiGlyphSVG({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="262"
-      height="261"
-      viewBox="0 0 262 261"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M97.6938 197.112C107.254 200.875 116.404 203.638 126.696 203.288C136.988 202.937 148.208 199.481 157.577 195.072C166.946 190.664 174.054 183.897 180.992 176.139C187.931 168.382 193.112 159.496 196.505 149.637C199.898 139.779 202.731 129.646 202.032 119.271C201.333 108.896 198.561 98.7935 193.883 89.5715C189.205 80.3496 181.781 74.1297 173.876 67.5436C165.971 60.9575 155.941 61.388 146.08 58.4969L125.977 125.273L97.6938 197.112Z"
-        fill="#655343"
-      />
-      <path
-        d="M143.933 55.3928C163.578 57.09 179.347 69.0568 189.34 82.7145M85.2608 190.369C123.47 218.435 175.288 200.815 195.595 151.877C197.843 146.458 199.467 141.012 200.49 135.614M200.49 135.614L192.558 131.778M200.49 135.614C201.115 132.319 201.516 129.042 201.699 125.8M201.699 125.8L193.843 122.391M201.699 125.8C201.885 122.487 201.844 119.21 201.581 115.988M201.581 115.988L193.848 113.004M201.581 115.988C201.308 112.652 200.797 109.374 200.055 106.175M200.055 106.175L192.997 104.045M200.055 106.175C199.431 103.489 198.644 100.859 197.698 98.2959M197.698 98.2959L191.719 97.2195M197.698 98.2959C196.622 95.383 195.34 92.5574 193.858 89.8368M193.858 89.8368L188.733 89.1145M193.858 89.8368C192.515 87.3722 191.008 84.9938 189.34 82.7145M189.34 82.7145L184.893 81.8632"
-        stroke="#18181B"
-        strokeWidth="1.29277"
-      />
-      <path
-        d="M85.2595 190.366C94.8946 197.443 105.395 201.615 116.037 203.113M185.751 169.956L178.876 164.631M185.751 169.956C183.999 172.471 182.148 174.857 180.209 177.109M185.751 169.956C187.393 167.596 188.949 165.121 190.408 162.535M180.209 177.109L173.415 171.492M180.209 177.109C178.317 179.305 176.342 181.374 174.293 183.313M174.293 183.313L167.613 177.832M174.293 183.313C172.072 185.414 169.764 187.362 167.383 189.152M167.383 189.152L161.107 183.528M167.383 189.152C164.905 191.016 162.347 192.709 159.723 194.227M159.723 194.227L153.896 188.581M159.723 194.227C156.971 195.82 154.147 197.22 151.268 198.422M151.268 198.422L145.98 192.99M151.268 198.422C148.351 199.639 145.379 200.653 142.368 201.459M142.368 201.459L137.759 196.603M142.368 201.459C139.421 202.246 136.438 202.834 133.435 203.217M133.435 203.217L129.477 198.868M133.435 203.217C130.284 203.618 127.112 203.793 123.936 203.736M123.936 203.736L120.738 199.938M123.936 203.736C121.302 203.689 118.665 203.483 116.037 203.113M116.037 203.113L113.593 200.396M190.408 162.535L183.577 156.95M190.408 162.535C191.943 159.813 193.371 156.967 194.682 154.001M194.682 154.001C194.993 153.299 195.296 152.589 195.594 151.874L198.103 144.998L190.417 140.734M194.682 154.001L186.997 148.843"
-        stroke="#18181B"
-        strokeWidth="1.29277"
-      />
-      <path
-        d="M166.121 62.9207C136.426 45.1043 94.8411 59.397 73.3077 95.1822C51.7743 130.967 58.659 174.341 88.3539 192.157C118.049 209.973 159.633 195.68 181.166 159.895C202.699 124.11 195.815 80.7372 166.121 62.9207Z"
-        fill="#A99482"
-        stroke="#18181B"
-        strokeWidth="1.29276"
-      />
-      <path
-        d="M159.589 72.0603C133.878 56.6117 97.8643 68.9721 79.2177 100.005C60.5711 131.038 66.5645 168.64 92.2754 184.089C117.986 199.538 154.001 187.176 172.647 156.143C191.294 125.11 185.3 87.5089 159.589 72.0603Z"
-        fill="#141414"
-        stroke="#18181B"
-        strokeWidth="1.29277"
-      />
-      <path
-        d="M117.503 132.502L120.503 114.502L121.503 114.502L144.503 132.502L133.503 144.502L117.503 132.502Z"
-        fill="#A99482"
-      />
-      <path
-        d="M144.503 132.5L144.501 132.502L148.003 135L137.003 147L134.003 144L144.501 132.502L144.499 132.501L144.503 132.5Z"
-        fill="#645346"
-      />
-      <path
-        d="M115.003 162L127.503 149.999L128.503 149.999L131.503 153L118.503 165L115.003 162Z"
-        fill="#645346"
-      />
-      <path
-        d="M150.003 127.501L160.503 115L161.003 115L164.003 117.5L153.003 130L150.003 127.501Z"
-        fill="#645346"
-      />
-      <path
-        d="M114.503 161.502L117.003 141.002L128.503 149.502L116.003 161.002L114.503 161.502Z"
-        fill="#A99482"
-      />
-      <path
-        d="M160.999 114.502L126.499 90.002L122.003 107.002L149.999 127.502L160.999 114.502Z"
-        fill="#A99482"
-      />
-      <path
-        d="M88.5033 112.502L125.999 90.002L122.003 107.002L93.5033 123.502L88.5033 112.502Z"
-        fill="#655343"
-      />
-      <path
-        d="M88.5073 112.502L126.003 90.002L122.007 107.002L93.5073 123.502L88.5073 112.502Z"
-        fill="#F7F3EE"
-      />
-      <path
-        d="M93.5033 124.001L121.503 107L126.503 110.501L98.5033 127L93.5033 124.001Z"
-        fill="#978C7F"
-      />
-      <path
-        d="M101.499 141.5L117.503 132.5L121.003 135.501L106.503 145L101.499 141.5Z"
-        fill="#978C7F"
-      />
-      <path
-        d="M95.5033 129.501L120.503 114.501L117.503 132.001L101.003 141.5L95.5033 129.501Z"
-        fill="#F7F3EE"
-      />
-      <path
-        d="M105.503 148.5L117.007 141L115.003 161.502L114.003 160.5L105.503 148.5Z"
-        fill="#F7F3EE"
-      />
-      <path
-        d="M126.582 89.878L161.138 114.481M126.582 89.878L88.593 112.631L93.6249 123.756M126.582 89.878L121.895 107.03M161.138 114.481L149.67 127.587M161.138 114.481L164.465 117.194L153.253 130.308L149.67 127.587M149.67 127.587L126.582 110.422M93.6249 123.756L98.8278 127.391M93.6249 123.756L121.895 107.03M98.8278 127.391L120.62 114.068M98.8278 127.391L95.8518 129.557L101.312 141.798M126.582 110.422L121.964 106.989L121.895 107.03M126.582 110.422L120.62 114.068M120.62 114.068L144.627 132.595M120.62 114.068L117.455 132.273M117.455 132.273L101.312 141.798M117.455 132.273L121.502 135.328M101.312 141.798L106.565 144.902L121.502 135.328M133.645 144.491L137.467 147.376L148.165 135.602L144.627 132.595M133.645 144.491L144.627 132.595M133.645 144.491L121.502 135.328M117.184 140.825L128.391 149.58M117.184 140.825L105.466 148.652L114.744 162.242M117.184 140.825L114.744 162.242M114.744 162.242L118.634 165.101L131.929 152.675L128.391 149.58M114.744 162.242L128.391 149.58"
-        stroke="#18181B"
-        strokeWidth="1.29277"
-      />
-    </svg>
-  );
-}
 
 function SUSDaiGlyphSVG({ className }: { className?: string }) {
   return (
@@ -571,138 +437,8 @@ function DefineSection() {
   );
 }
 
-function DualCardToggle({
-  card,
-  glyphSvg,
-}: {
-  card: DualCardData;
-  glyphSvg: React.ReactNode;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <button
-      className={`w-full p-5 px-6 bg-white border border-feldspar-dust rounded-xl text-left transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)] ${isOpen ? "" : ""}`}
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3.5">
-          <div>
-            <span className="text-[10px] font-semibold tracking-[1.5px] uppercase text-secondary">
-              {card.label}
-            </span>
-            <h3 className="font-eiko text-[22px] font-light text-dark">
-              {card.name}
-            </h3>
-          </div>
-        </div>
-        <svg
-          className={`w-5 h-5 text-secondary transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-          viewBox="0 0 20 20"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M5 7.5l5 5 5-5" />
-        </svg>
-      </div>
-      <div
-        className="overflow-hidden transition-[max-height] duration-400"
-        style={{ maxHeight: isOpen ? "600px" : "0px" }}
-      >
-        <div className="pt-4">
-          <p className="text-[13px] text-text-muted leading-[1.65] mb-4">
-            {card.description}
-          </p>
-          <ul className="flex flex-col gap-3">
-            {card.traits.map((trait) => (
-              <li
-                key={trait}
-                className="flex items-start gap-2.5 text-[13px] text-dark leading-[1.5] font-medium"
-              >
-                <span className="w-[7px] h-[7px] rounded-full bg-secondary shrink-0 mt-[5px]" />
-                {trait}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </button>
-  );
-}
-
-function DualSection() {
-  return (
-    <section className="py-[100px] px-20 bg-feature-bg max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <Tag color="#DBD0C6" className="mb-5">
-        Two tokens, one protocol
-      </Tag>
-      <h2 className="font-eiko font-light text-[38px] text-dark leading-[1.15] mb-12">
-        Stability or yield. You choose.
-      </h2>
-
-      {/* Desktop cards */}
-      <div className="grid grid-cols-2 gap-6 max-lg:hidden">
-        {DUAL_CARDS.map((card) => (
-          <a
-            key={card.name}
-            href={card.href}
-            className="flex overflow-hidden bg-white border border-feldspar-dust rounded-2xl no-underline text-inherit transition-all duration-300 hover:shadow-[0_8px_32px_rgba(47,40,35,0.08)] hover:-translate-y-0.5 group"
-          >
-            <div className="flex-1 p-7 px-7 flex flex-col justify-start">
-              <div className="text-[11px] font-semibold tracking-[1.5px] uppercase text-secondary mb-3">
-                {card.label}
-              </div>
-              <h3 className="font-eiko text-[24px] font-light text-dark mb-2.5">
-                {card.name}
-              </h3>
-              <p className="text-[13px] text-text-muted leading-[1.65] mb-5">
-                {card.description}
-              </p>
-              <ul className="flex flex-col gap-3">
-                {card.traits.map((trait) => (
-                  <li
-                    key={trait}
-                    className="flex items-start gap-2.5 text-[13px] text-dark leading-[1.5] font-medium"
-                  >
-                    <span className="w-[7px] h-[7px] rounded-full bg-secondary shrink-0 mt-[5px]" />
-                    {trait}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div
-              className={`w-[240px] shrink-0 flex items-center justify-center relative overflow-hidden ${
-                card.variant === "dark" ? "bg-dark" : "bg-feldspar-dust"
-              }`}
-            >
-              {card.variant === "dark" ? (
-                <USDaiGlyphSVG className="w-4/5 h-auto opacity-85 scale-90 transition-all duration-400 group-hover:opacity-100 group-hover:scale-100" />
-              ) : (
-                <SUSDaiGlyphSVG className="w-4/5 h-auto opacity-85 scale-90 transition-all duration-400 group-hover:opacity-100 group-hover:scale-100" />
-              )}
-            </div>
-          </a>
-        ))}
-      </div>
-
-      {/* Mobile toggles */}
-      <div className="hidden max-lg:grid gap-3">
-        {[...DUAL_CARDS].reverse().map((card) => (
-          <DualCardToggle
-            key={card.name}
-            card={card}
-            glyphSvg={
-              card.variant === "dark" ? <USDaiGlyphSVG /> : <SUSDaiGlyphSVG />
-            }
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
+const FEATURED_SAFEGUARDS = SAFEGUARD_CARDS.slice(0, 2);
+const SECONDARY_SAFEGUARDS = SAFEGUARD_CARDS.slice(2);
 
 function SafeguardsSection() {
   return (
@@ -714,16 +450,37 @@ function SafeguardsSection() {
         Built to protect depositors first.
       </h2>
 
-      <div className="grid grid-cols-3 gap-5 max-lg:grid-cols-2 max-sm:grid-cols-1">
-        {SAFEGUARD_CARDS.map((card) => (
+      {/* Featured cards */}
+      <div className="grid grid-cols-2 gap-6 mb-6 max-sm:grid-cols-1">
+        {FEATURED_SAFEGUARDS.map((card) => (
           <div
             key={card.num}
-            className="border border-feldspar-dust rounded-[10px] py-7 px-6 transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
+            className="border border-feldspar-dust rounded-[12px] py-9 px-8 border-l-[3px] border-l-[#A99482] transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
           >
-            <span className="font-eiko text-[32px] font-light text-feldspar-dust mb-3 block">
+            <span className="font-eiko text-[42px] font-light text-[#A99482] mb-4 block">
               {card.num}
             </span>
-            <h4 className="font-eiko text-[19px] font-normal text-dark mb-2">
+            <h4 className="font-eiko text-[22px] font-semibold text-dark mb-3">
+              {card.title}
+            </h4>
+            <p className="text-[14px] text-text-muted leading-[1.7]">
+              {card.description}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Secondary cards */}
+      <div className="grid grid-cols-2 gap-5 max-sm:grid-cols-1">
+        {SECONDARY_SAFEGUARDS.map((card) => (
+          <div
+            key={card.num}
+            className="border border-feldspar-dust rounded-[10px] py-6 px-5 transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
+          >
+            <span className="font-eiko text-[28px] font-light text-feldspar-dust mb-2 block">
+              {card.num}
+            </span>
+            <h4 className="font-eiko text-[17px] font-normal text-dark mb-1.5">
               {card.title}
             </h4>
             <p className="text-[13px] text-text-muted leading-[1.65]">
@@ -738,47 +495,49 @@ function SafeguardsSection() {
 
 function HowToSection() {
   return (
-    <section className="py-20 px-20 bg-white border-t border-outline-subtle max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <div className="text-center mb-14">
-        <h2 className="font-eiko font-light text-[clamp(26px,3vw,36px)] text-dark mb-3">
-          How to stake & unstake
-        </h2>
-        <p className="text-[15px] text-text-muted max-w-[480px] mx-auto leading-[1.7]">
-          Stake USDai to receive sUSDai and begin earning yield from GPU-backed
-          lending. Unstake anytime with a ~30 day redemption period.
-        </p>
-      </div>
+    <section className="py-20 px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
+      <div className="bg-[#F7F3EE] rounded-[16px] p-12 max-sm:p-7">
+        <div className="text-center mb-14">
+          <h2 className="font-eiko font-light text-[clamp(26px,3vw,36px)] text-dark mb-3">
+            How to stake & unstake
+          </h2>
+          <p className="text-[15px] text-text-muted max-w-[480px] mx-auto leading-[1.7]">
+            Stake USDai to receive sUSDai and begin earning yield from GPU-backed
+            lending. Unstake anytime with a ~30 day redemption period.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-2 gap-12 max-w-[960px] mx-auto max-sm:grid-cols-1 max-sm:gap-10">
-        {HOWTO_CARDS.map((card) => (
-          <div key={card.title}>
-            <h3 className="font-eiko font-light text-[22px] text-dark mb-2 pb-3 border-b-2 border-secondary">
-              {card.title}
-            </h3>
-            <p className="text-[13px] text-text-muted leading-[1.6] mb-5 italic">
-              {card.note}
-            </p>
-            <ol className="flex flex-col gap-0">
-              {card.steps.map((step, i) => (
-                <li
-                  key={i}
-                  className="flex items-baseline gap-3 py-2.5 text-[14px] text-dark leading-[1.5]"
-                >
-                  <span className="shrink-0 w-6 h-6 flex items-center justify-center bg-feature-bg rounded-full text-[12px] font-semibold text-primary">
-                    {i + 1}
-                  </span>
-                  {step}
-                </li>
-              ))}
-            </ol>
-            <a
-              href={card.linkHref}
-              className="inline-flex items-center gap-1.5 mt-4 text-[13px] font-medium text-secondary no-underline transition-colors hover:text-primary"
-            >
-              {card.linkLabel} <span>&rarr;</span>
-            </a>
-          </div>
-        ))}
+        <div className="grid grid-cols-2 gap-12 max-w-[960px] mx-auto max-sm:grid-cols-1 max-sm:gap-10">
+          {HOWTO_CARDS.map((card) => (
+            <div key={card.title}>
+              <h3 className="font-eiko font-light text-[22px] text-dark mb-2 pb-3 border-b-2 border-secondary">
+                {card.title}
+              </h3>
+              <p className="text-[13px] text-text-muted leading-[1.6] mb-5 italic">
+                {card.note}
+              </p>
+              <ol className="flex flex-col gap-0">
+                {card.steps.map((step, i) => (
+                  <li
+                    key={i}
+                    className="flex items-baseline gap-3.5 py-3 text-[14px] text-dark leading-[1.5]"
+                  >
+                    <span className="shrink-0 font-eiko text-[24px] font-light text-[#A99482]">
+                      {i + 1}
+                    </span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
+              <a
+                href={card.linkHref}
+                className="inline-flex items-center gap-1.5 mt-5 text-[13px] font-medium text-secondary no-underline transition-colors hover:text-primary"
+              >
+                {card.linkLabel} <span>&rarr;</span>
+              </a>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -826,7 +585,6 @@ export default function SUSDaiContent() {
 
       <div className="bg-feature-bg">
         <DefineSection />
-        <DualSection />
         <SafeguardsSection />
         <HowToSection />
         <CTASection />
