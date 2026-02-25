@@ -479,22 +479,27 @@ function SilkCanvas() {
       const time = Date.now();
 
       lines.forEach((line) => {
-        ctx!.beginPath();
-        ctx!.moveTo(width, line.y);
+        let prevX = width;
+        let prevY = line.y;
 
-        for (let x = width; x > -100; x -= 50) {
+        for (let x = width; x > -100; x -= 10) {
           const y =
             line.y +
             Math.sin(x * line.freq + time * line.speed + line.offset) *
               line.amp;
           const opacity = Math.max(0, (x / width) * 0.8);
+
+          ctx!.beginPath();
+          ctx!.moveTo(prevX, prevY);
+          ctx!.lineTo(x, y);
           ctx!.strokeStyle = line.color;
           ctx!.globalAlpha = opacity;
-          ctx!.lineTo(x, y);
-        }
+          ctx!.lineWidth = 2;
+          ctx!.stroke();
 
-        ctx!.lineWidth = 2;
-        ctx!.stroke();
+          prevX = x;
+          prevY = y;
+        }
       });
 
       animationId = requestAnimationFrame(draw);
