@@ -500,7 +500,7 @@ function SilkCanvas() {
           }
         }
         ctx!.strokeStyle = line.color;
-        ctx!.globalAlpha = 0.35;
+        ctx!.globalAlpha = 0.2;
         ctx!.lineWidth = line.width;
         ctx!.lineCap = "round";
         ctx!.lineJoin = "round";
