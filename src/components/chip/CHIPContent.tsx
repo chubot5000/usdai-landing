@@ -422,6 +422,131 @@ function ChipTokenSVG() {
   );
 }
 
+// ─── Silk Canvas Animation ───────────────────────────────────────────────────
+
+function SilkCanvas({ className }: { className?: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationId: number;
+    let lines: Array<{
+      x: number;
+      y: number;
+      amp: number;
+      freq: number;
+      speed: number;
+      offset: number;
+      color: string;
+    }> = [];
+
+    const colors = ["#A99482", "#655343", "#DBD0C6", "#2F2823", "#A99482"];
+
+    function resize() {
+      if (!canvas) return;
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      initLines();
+    }
+
+    function initLines() {
+      if (!canvas) return;
+      lines = [];
+      const count = 12;
+      for (let i = 0; i < count; i++) {
+        lines.push({
+          x: Math.random() * canvas.width,
+          y: canvas.height + 100,
+          amp: 40 + Math.random() * 80,
+          freq: 0.002 + Math.random() * 0.004,
+          speed: 0.0008 + Math.random() * 0.0015,
+          offset: Math.random() * Math.PI * 2,
+          color: colors[i % colors.length],
+        });
+      }
+    }
+
+    function draw() {
+      if (!canvas || !ctx) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const time = Date.now();
+
+      lines.forEach((line) => {
+        ctx.beginPath();
+        ctx.moveTo(line.x, canvas.height);
+
+        for (let y = canvas.height; y > -100; y -= 40) {
+          const x =
+            line.x +
+            Math.sin(y * line.freq + time * line.speed + line.offset) *
+              line.amp;
+          const opacity = Math.max(0, (y / canvas.height) * 0.35);
+          ctx.strokeStyle = line.color;
+          ctx.globalAlpha = opacity;
+          ctx.lineTo(x, y);
+        }
+
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+
+      animationId = requestAnimationFrame(draw);
+    }
+
+    resize();
+    draw();
+
+    window.addEventListener("resize", resize);
+    return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(animationId);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className={className}
+      style={{ width: "100%", height: "100%" }}
+    />
+  );
+}
+
+// ─── Conic Gradient Diamond Icon ─────────────────────────────────────────────
+
+const CARD_COLORS = [
+  { gradient: "#A99482", bg: "rgba(169,148,130,0.15)" },  // Canyon Wall
+  { gradient: "#655343", bg: "rgba(101,83,67,0.15)" },    // Sintered Earth
+  { gradient: "#2F2823", bg: "rgba(47,40,35,0.2)" },      // Lignite Mines
+];
+
+function ConicDiamondIcon({ colorIndex }: { colorIndex: number }) {
+  const color = CARD_COLORS[colorIndex % CARD_COLORS.length];
+
+  return (
+    <div
+      className="w-[80px] h-[80px] mx-auto mb-6 relative overflow-hidden"
+      style={{
+        clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+        background: color.bg,
+      }}
+    >
+      <div
+        className="absolute inset-[-50%] w-[200%] h-[200%] conic-spin"
+        style={{
+          background: `conic-gradient(from 0deg, transparent 0deg, ${color.gradient} 360deg)`,
+          opacity: 0.4,
+        }}
+      />
+    </div>
+  );
+}
+
 // ─── Section Components ──────────────────────────────────────────────────────
 
 function HeroSection() {
@@ -512,18 +637,10 @@ function HeroSection() {
 function StatementSection() {
   return (
     <section className="relative bg-white py-[100px] px-20 overflow-hidden max-lg:py-[80px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      {/* Subtle diagonal hatching texture */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(-45deg, rgba(169,148,130,0.06) 0, rgba(169,148,130,0.06) 1px, transparent 1px, transparent 8px)",
-          maskImage:
-            "radial-gradient(ellipse at 50% 50%, black 0%, transparent 70%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse at 50% 50%, black 0%, transparent 70%)",
-        }}
-      />
+      {/* Silk Canvas animation background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
+        <SilkCanvas className="absolute inset-0" />
+      </div>
       <div className="relative z-10 text-center mb-[72px]">
         <h2 className="font-eiko font-light text-[clamp(32px,4.5vw,56px)] text-dark leading-[1.15] max-w-[800px] mx-auto mb-6">
           The only token that captures real AI infrastructure growth
@@ -537,14 +654,12 @@ function StatementSection() {
       </div>
 
       <div className="relative z-10 grid grid-cols-3 gap-8 max-w-[1100px] mx-auto max-lg:gap-5 max-sm:grid-cols-1 max-sm:gap-4">
-        {STATEMENT_CARDS.map((card) => (
+        {STATEMENT_CARDS.map((card, i) => (
           <div
             key={card.num}
-            className="text-center px-7 py-10 bg-white border border-outline-minor rounded-xl transition-all duration-300 hover:border-secondary hover:shadow-[0_8px_32px_rgba(47,40,35,0.06)]"
+            className="group text-center px-7 py-10 bg-white/90 backdrop-blur-sm border border-outline-minor rounded-xl transition-all duration-300 hover:border-secondary hover:shadow-[0_8px_32px_rgba(47,40,35,0.06)]"
           >
-            <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-feature-bg text-primary text-[16px] font-semibold mb-5">
-              {card.num}
-            </span>
+            <ConicDiamondIcon colorIndex={i} />
             <h4 className="font-eiko text-[20px] font-normal text-dark mb-3">
               {card.title}
             </h4>

@@ -217,3 +217,16 @@ body {
 .animate-hero-float {
   animation: heroFloat 5s ease-in-out infinite;
 }
+
+@keyframes conicSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.conic-spin {
+  animation: conicSpin 8s linear infinite;
+}
+
+.group:hover .conic-spin {
+  animation-duration: 24s;
+}
