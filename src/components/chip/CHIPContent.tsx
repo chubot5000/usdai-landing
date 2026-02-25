@@ -462,7 +462,7 @@ function SilkCanvas() {
           freq: 0.002 + Math.random() * 0.005,
           speed: 0.001 + Math.random() * 0.002,
           offset: Math.random() * Math.PI * 2,
-          color: i % 3 === 0 ? "#A99482" : "#655343",
+          color: i % 3 === 0 ? "#A99482" : "#2F2823",
         });
       }
     }
@@ -487,7 +487,7 @@ function SilkCanvas() {
             line.y +
             Math.sin(x * line.freq + time * line.speed + line.offset) *
               line.amp;
-          const opacity = Math.max(0, (x / width) * 0.5);
+          const opacity = Math.max(0, (x / width) * 0.8);
           ctx!.strokeStyle = line.color;
           ctx!.globalAlpha = opacity;
           ctx!.lineTo(x, y);
