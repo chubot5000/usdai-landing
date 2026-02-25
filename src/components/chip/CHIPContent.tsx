@@ -451,18 +451,17 @@ function SilkCanvas() {
 
     function initLines() {
       lines = [];
-      const count = 15;
-      // Cluster lines in the center area (40%-60% of height)
-      const centerY = height * 0.5;
-      const spread = height * 0.25;
+      const count = 8;
+      const centerY = height * 0.45;
+      const spread = height * 0.12;
       for (let i = 0; i < count; i++) {
         lines.push({
           y: centerY + (Math.random() - 0.5) * spread,
-          amp: 50 + Math.random() * 100,
-          freq: 0.002 + Math.random() * 0.005,
-          speed: 0.001 + Math.random() * 0.002,
+          amp: 30 + Math.random() * 50,
+          freq: 0.001 + Math.random() * 0.002,
+          speed: 0.0004 + Math.random() * 0.0006,
           offset: Math.random() * Math.PI * 2,
-          color: i % 3 === 0 ? "#A99482" : "#2F2823",
+          color: i % 2 === 0 ? "#E8E0D8" : "#DBD0C6",
         });
       }
     }
@@ -479,27 +478,26 @@ function SilkCanvas() {
       const time = Date.now();
 
       lines.forEach((line) => {
-        let prevX = width;
-        let prevY = line.y;
-
-        for (let x = width; x > -100; x -= 10) {
+        ctx!.beginPath();
+        let first = true;
+        for (let x = width + 100; x > -100; x -= 4) {
           const y =
             line.y +
             Math.sin(x * line.freq + time * line.speed + line.offset) *
               line.amp;
-          const opacity = Math.max(0, (x / width) * 0.8);
-
-          ctx!.beginPath();
-          ctx!.moveTo(prevX, prevY);
-          ctx!.lineTo(x, y);
-          ctx!.strokeStyle = line.color;
-          ctx!.globalAlpha = opacity;
-          ctx!.lineWidth = 2;
-          ctx!.stroke();
-
-          prevX = x;
-          prevY = y;
+          if (first) {
+            ctx!.moveTo(x, y);
+            first = false;
+          } else {
+            ctx!.lineTo(x, y);
+          }
         }
+        ctx!.strokeStyle = line.color;
+        ctx!.globalAlpha = 0.6;
+        ctx!.lineWidth = 25 + Math.random() * 15;
+        ctx!.lineCap = "round";
+        ctx!.lineJoin = "round";
+        ctx!.stroke();
       });
 
       animationId = requestAnimationFrame(draw);
