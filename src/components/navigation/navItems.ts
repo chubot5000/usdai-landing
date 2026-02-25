@@ -123,6 +123,12 @@ export const NAV_ITEMS_COLLAPSED: NavItem[] = [
         description: "Technical docs & guides",
         external: true,
       },
+      {
+        label: "Brand Kit",
+        href: "/brand-kit",
+        description: "Logos, colors & typography",
+        dividerBefore: true,
+      },
     ],
   },
 ];
