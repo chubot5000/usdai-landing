@@ -12,6 +12,7 @@ import {
 } from "@/hooks/useAnimateOnScroll";
 import { EXTERNAL_LINKS } from "@/lib/constants";
 import Image from "next/image";
+import { useRef, useEffect, useState } from "react";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -510,7 +511,7 @@ function HeroSection() {
 
 function StatementSection() {
   return (
-    <section className="py-[100px] px-20 max-lg:py-[80px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
+    <section className="bg-white py-[100px] px-20 max-lg:py-[80px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
       <div className="text-center mb-[72px]">
         <h2 className="font-eiko font-light text-[clamp(32px,4.5vw,56px)] text-dark leading-[1.15] max-w-[800px] mx-auto mb-6">
           The only token that captures real AI infrastructure growth
@@ -547,13 +548,13 @@ function StatementSection() {
 
 function ProblemSection() {
   return (
-    <section className="py-[100px] px-20 bg-feature-bg max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
+    <section className="py-[100px] px-20 bg-[#2f2823] max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
       <div className="max-w-[560px] mb-16">
-        <Tag className="mb-5">The Problem</Tag>
-        <h2 className="font-eiko font-light text-[38px] text-dark leading-[1.15] mb-[18px]">
+        <Tag className="mb-5 !border-white/20 !text-white/70">The Problem</Tag>
+        <h2 className="font-eiko font-light text-[38px] text-white leading-[1.15] mb-[18px]">
           Capital can&apos;t keep pace with compute
         </h2>
-        <p className="text-[15px] text-text-muted leading-[1.75]">
+        <p className="text-[15px] text-white/50 leading-[1.75]">
           GPUs depreciate at roughly 20% per year, but traditional credit
           infrastructure moves at the wrong tempo for hardware that&apos;s
           obsolete in three years.
@@ -564,12 +565,12 @@ function ProblemSection() {
         {PROBLEM_CARDS.map((card) => (
           <div
             key={card.title}
-            className="px-8 py-9 border-t-2 border-outline-minor transition-colors duration-300 hover:border-secondary"
+            className="px-8 py-9 border-t-2 border-white/15 transition-colors duration-300 hover:border-[#A99482]"
           >
-            <h4 className="font-eiko text-[20px] font-normal text-dark mb-2.5">
+            <h4 className="font-eiko text-[20px] font-normal text-white mb-2.5">
               {card.title}
             </h4>
-            <p className="text-[13px] text-text-muted leading-[1.65]">
+            <p className="text-[13px] text-white/50 leading-[1.65]">
               {card.description}
             </p>
           </div>
@@ -581,33 +582,55 @@ function ProblemSection() {
 
 function GovernanceSection() {
   return (
-    <section className="py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <div className="flex justify-center mb-10">
-        <ChipTokenSVG />
-      </div>
+    <section
+      className="relative py-[100px] px-20 bg-white overflow-hidden max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6"
+    >
+      {/* Diagonal line background texture */}
+      <div
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage: `repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 14px,
+            #655343 14px,
+            #655343 15px
+          )`,
+        }}
+      />
 
-      <Tag className="mb-5">CHIP Governance</Tag>
-      <h2 className="font-eiko font-light text-[38px] text-dark leading-[1.15] mb-12">
-        CHIP holders decide the future of GPU-backed lending.
-      </h2>
-
-      <div className="grid grid-cols-3 gap-5 max-lg:grid-cols-2 max-sm:grid-cols-1">
-        {GOVERNANCE_CARDS.map((card) => (
-          <div
-            key={card.num}
-            className="border border-outline-minor rounded-[10px] px-6 py-7 transition-shadow duration-200 hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
-          >
-            <span className="font-eiko text-[32px] font-light text-feldspar-dust mb-3 block">
-              {card.num}
-            </span>
-            <h4 className="font-eiko text-[19px] font-normal text-dark mb-2">
-              {card.title}
-            </h4>
-            <p className="text-[13px] text-text-muted leading-[1.65]">
-              {card.description}
-            </p>
+      <div className="relative z-10">
+        {/* Header with token SVG beside it */}
+        <div className="flex items-start gap-8 mb-14 max-sm:flex-col max-sm:gap-5">
+          <div className="shrink-0 mt-1">
+            <ChipTokenSVG />
           </div>
-        ))}
+          <div>
+            <Tag className="mb-5">CHIP Governance</Tag>
+            <h2 className="font-eiko font-light text-[38px] text-dark leading-[1.15]">
+              CHIP holders decide the future of GPU-backed lending.
+            </h2>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-5 max-lg:grid-cols-2 max-sm:grid-cols-1">
+          {GOVERNANCE_CARDS.map((card) => (
+            <div
+              key={card.num}
+              className="bg-white/80 backdrop-blur-sm border border-outline-minor rounded-[10px] px-6 py-7 transition-shadow duration-200 hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
+            >
+              <span className="font-eiko text-[32px] font-light text-feldspar-dust mb-3 block">
+                {card.num}
+              </span>
+              <h4 className="font-eiko text-[19px] font-normal text-dark mb-2">
+                {card.title}
+              </h4>
+              <p className="text-[13px] text-text-muted leading-[1.65]">
+                {card.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -649,41 +672,51 @@ function TractionSection() {
         Building liquidity that didn&apos;t exist.
       </h2>
 
-      <div className="grid grid-cols-4 gap-6 max-lg:grid-cols-2 max-sm:grid-cols-2 max-sm:gap-4">
-        {TRACTION_STATS.map((stat) => (
-          <StatCounter key={stat.label} stat={stat} isInView={isInView} />
-        ))}
+      {/* Frame-within-frame stats card */}
+      <div className="border border-outline-minor rounded-[21px] p-10 bg-white max-sm:p-6">
+        <div className="grid grid-cols-4 gap-6 max-lg:grid-cols-2 max-sm:grid-cols-2 max-sm:gap-4">
+          {TRACTION_STATS.map((stat) => (
+            <StatCounter key={stat.label} stat={stat} isInView={isInView} />
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-function RevenueSection() {
+function RevenueSection({ isDark }: { isDark: boolean }) {
   return (
     <section className="py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <Tag className="mb-5">How It Works</Tag>
-      <h2 className="font-eiko font-light text-[38px] text-dark leading-[1.15] mb-[18px]">
+      <Tag className={`mb-5 transition-colors duration-500 ${isDark ? "!border-white/20 !text-white/70" : ""}`}>How It Works</Tag>
+      <h2 className={`font-eiko font-light text-[38px] leading-[1.15] mb-[18px] transition-colors duration-500 ${isDark ? "text-white" : "text-dark"}`}>
         Real revenue from real infrastructure
       </h2>
-      <p className="text-[15px] text-text-muted leading-[1.75] max-w-[600px] mb-12">
+      <p className={`text-[15px] leading-[1.75] max-w-[600px] mb-12 transition-colors duration-500 ${isDark ? "text-white/50" : "text-text-muted"}`}>
         USD.AI captures fees on origination and net interest margin. Risk is
         managed through first-loss curators who take illiquid positions and
         often originate loans.
       </p>
 
-      <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-1">
+      {/* Steps with connecting line */}
+      <div className="relative grid grid-cols-3 gap-6 max-lg:grid-cols-1">
+        {/* Horizontal connector line (desktop only) */}
+        <div className={`absolute top-[28px] left-[60px] right-[60px] h-px transition-colors duration-500 max-lg:hidden ${isDark ? "bg-white/15" : "bg-outline-minor"}`} />
+
         {REVENUE_STEPS.map((step) => (
           <div
             key={step.num}
-            className="px-8 py-9 border-t-2 border-outline-minor transition-colors duration-300 hover:border-secondary"
+            className="relative px-8 py-9"
           >
-            <span className="font-eiko text-[36px] font-light text-feldspar-dust mb-4 block">
-              {step.num}
-            </span>
-            <h4 className="font-eiko text-[20px] font-normal text-dark mb-2.5">
+            {/* Step number circle */}
+            <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-6 transition-colors duration-500 ${isDark ? "bg-white/10 border border-white/15" : "bg-feature-bg border border-outline-minor"}`}>
+              <span className={`font-eiko text-[20px] font-light transition-colors duration-500 ${isDark ? "text-[#A99482]" : "text-feldspar-dust"}`}>
+                {step.num}
+              </span>
+            </div>
+            <h4 className={`font-eiko text-[20px] font-normal mb-2.5 transition-colors duration-500 ${isDark ? "text-white" : "text-dark"}`}>
               {step.title}
             </h4>
-            <p className="text-[13px] text-text-muted leading-[1.65]">
+            <p className={`text-[13px] leading-[1.65] transition-colors duration-500 ${isDark ? "text-white/50" : "text-text-muted"}`}>
               {step.description}
             </p>
           </div>
@@ -695,7 +728,7 @@ function RevenueSection() {
 
 function CTASection() {
   return (
-    <section className="bg-dark-primary py-[100px] px-20 text-center max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
+    <section className="py-[100px] px-20 text-center max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
       <h2 className="font-eiko font-light text-[clamp(28px,3.5vw,40px)] text-white mb-3.5">
         The interest rate of AI, governed by its holders.
       </h2>
@@ -725,21 +758,67 @@ function CTASection() {
   );
 }
 
+// ─── Color Scroll Wrapper ────────────────────────────────────────────────────
+
+function ColorScrollWrapper({ children }: { children: (isDark: boolean) => React.ReactNode }) {
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!triggerRef.current) return;
+
+      const rect = triggerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      const isInView = rect.top < viewportHeight * 0.5 && rect.bottom > 0;
+      const isPastSection = rect.bottom < 0;
+
+      setIsDark(isInView || isPastSection);
+    };
+
+    handleScroll();
+
+    const scrollElement = document.querySelector(".simplebar-content-wrapper");
+    if (scrollElement) {
+      scrollElement.addEventListener("scroll", handleScroll, { passive: true });
+      return () => scrollElement.removeEventListener("scroll", handleScroll);
+    } else {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
+
+  return (
+    <div
+      className={`w-full transition-colors duration-500 ${isDark ? "bg-[#2f2823]" : "bg-feature-bg"}`}
+    >
+      <div ref={triggerRef}>
+        {children(isDark)}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Component ──────────────────────────────────────────────────────────
 
 export default function CHIPContent() {
   return (
     <>
       <HeroSection />
+      <StatementSection />
+      <ProblemSection />
+      <GovernanceSection />
+      <TractionSection />
 
-      <div className="bg-feature-bg">
-        <StatementSection />
-        <ProblemSection />
-        <GovernanceSection />
-        <TractionSection />
-        <RevenueSection />
-        <CTASection />
-      </div>
+      <ColorScrollWrapper>
+        {(isDark) => (
+          <>
+            <RevenueSection isDark={isDark} />
+            <CTASection />
+          </>
+        )}
+      </ColorScrollWrapper>
 
       <Footer />
     </>
