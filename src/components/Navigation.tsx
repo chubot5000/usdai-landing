@@ -21,7 +21,7 @@ function DropdownMenu({
   const textColor = isLight ? "text-white" : "text-[#1d1a19]";
   const isActive =
     activePage === item.pageKey ||
-    (activePage === "docs" && item.label === "More") ||
+    (activePage === "docs" && item.label === "Resources") ||
     (activePage === "stories" && item.pageKey === "insights") ||
     item.children?.some(
       (c) =>
@@ -182,7 +182,7 @@ export default function Navigation({
           </div>
         </Link>
 
-        {/* Nav Links - next to logo below 1300px, with Ecosystem+Docs collapsed into "More" */}
+        {/* Nav Links - next to logo below 1300px, with Ecosystem+Docs collapsed into "Resources" */}
         <div className="flex xl:hidden items-center gap-6 lg:gap-8">
           {NAV_ITEMS_COLLAPSED.map((item) => (
             <NavItemRenderer

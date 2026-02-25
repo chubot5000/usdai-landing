@@ -105,11 +105,11 @@ export const NAV_ITEMS: NavItem[] = [
   },
 ];
 
-// Collapsed version: Ecosystem + Documentation grouped under "More"
+// Collapsed version: Ecosystem + Documentation grouped under "Resources"
 export const NAV_ITEMS_COLLAPSED: NavItem[] = [
   ...NAV_ITEMS.slice(0, 4),
   {
-    label: "More",
+    label: "Resources",
     pageKey: "ecosystem",
     children: [
       {
