@@ -232,9 +232,10 @@ body {
 }
 
 @keyframes lineSweep {
-  0% { left: 0; width: 0; opacity: 0; }
-  50% { width: 200px; opacity: 1; }
-  100% { left: 100%; width: 0; opacity: 0; }
+  0% { left: 32px; width: 0; opacity: 0; }
+  15% { width: 200px; opacity: 1; }
+  85% { opacity: 1; }
+  100% { left: calc(66.67% + 60px); width: 0; opacity: 0; }
 }
 
 .line-sweep {
