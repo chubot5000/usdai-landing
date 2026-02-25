@@ -827,8 +827,8 @@ function TractionSection() {
       </h2>
 
       {/* Frame-within-frame stats card with dividers */}
-      <div className="relative border border-outline-minor rounded-[21px] p-10 bg-white max-sm:p-6 overflow-hidden">
-        <div className="grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-2 relative z-[1]">
+      <div className="border border-outline-minor rounded-[21px] p-10 bg-white max-sm:p-6">
+        <div className="grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-2">
           {TRACTION_STATS.map((stat, i) => (
             <div
               key={stat.label}
@@ -838,8 +838,6 @@ function TractionSection() {
             </div>
           ))}
         </div>
-        {/* Sweeping accent line */}
-        <div className="absolute top-1/2 left-0 h-px bg-[#A99482] line-sweep" />
       </div>
     </section>
   );
@@ -860,6 +858,11 @@ function RevenueSection({ isDark }: { isDark: boolean }) {
 
       {/* Steps with timeline connector */}
       <div className="relative grid grid-cols-3 gap-6 max-lg:grid-cols-1">
+        {/* Sweeping accent line — centered with step circles */}
+        <div
+          className={`absolute h-px line-sweep max-lg:hidden transition-colors duration-500 ${isDark ? "bg-[#A99482]" : "bg-[#A99482]"}`}
+          style={{ top: "36px" }}
+        />
         {REVENUE_STEPS.map((step, i) => (
           <div
             key={step.num}
