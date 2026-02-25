@@ -230,3 +230,13 @@ body {
 .group:hover .conic-spin {
   animation-duration: 24s;
 }
+
+@keyframes lineSweep {
+  0% { left: 0; width: 0; opacity: 0; }
+  50% { width: 200px; opacity: 1; }
+  100% { left: 100%; width: 0; opacity: 0; }
+}
+
+.line-sweep {
+  animation: lineSweep 3s infinite ease-in-out;
+}
