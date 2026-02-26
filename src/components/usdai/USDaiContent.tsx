@@ -399,7 +399,7 @@ function HeroSection() {
   const { ref, isInView } = useInView({ threshold: 0.3 });
 
   return (
-    <section className="relative w-full h-screen min-h-[600px] bg-white p-[10px]">
+    <section className="relative w-full min-h-screen max-sm:min-h-0 bg-white p-[10px]">
       {/* Nav above overflow-hidden container */}
       <div className="absolute top-[10px] left-[10px] right-[10px] z-20 px-4 sm:px-8 md:px-[60px] lg:px-[100px]">
         <div className="hidden lg:block">
@@ -434,11 +434,11 @@ function HeroSection() {
           }}
         />
 
-        <div className="relative w-full h-full px-4 sm:px-8 md:px-[60px] lg:px-[100px] flex flex-col z-10">
+        <div className="relative w-full h-full px-4 sm:px-8 md:px-[60px] lg:px-[100px] flex flex-col z-10 pt-[80px] max-sm:pt-[70px]">
           <div className="flex-1 flex flex-col justify-center">
             <div
               ref={ref as React.RefObject<HTMLDivElement>}
-              className="flex flex-row items-center justify-between w-full gap-10 relative overflow-hidden max-lg:flex-col"
+              className="flex flex-row items-center justify-between w-full gap-10 max-lg:gap-6 max-sm:gap-4 relative overflow-hidden max-lg:flex-col"
             >
               {/* Left text */}
               <div className="relative z-[1] flex-1 max-w-[600px]">
@@ -454,7 +454,7 @@ function HeroSection() {
                   redeemable, deeply liquid, and composable across DeFi and
                   CeFi.
                 </p>
-                <div className="flex gap-3.5 mb-[72px]">
+                <div className="flex gap-3.5 mb-[72px] max-sm:flex-col max-sm:mb-8">
                   <Button
                     href={EXTERNAL_LINKS.app}
                     external
@@ -475,7 +475,7 @@ function HeroSection() {
                 </div>
 
                 {/* Metrics */}
-                <div className="flex gap-14 pt-8 border-t border-white/6 flex-wrap max-sm:gap-7">
+                <div className="flex gap-14 pt-8 border-t border-white/6 flex-wrap max-sm:gap-5 max-sm:gap-y-4">
                   <HeroMetric
                     label="Total Deposits"
                     isInView={isInView}
@@ -505,7 +505,7 @@ function HeroSection() {
               </div>
 
               {/* Glyph */}
-              <div className="relative z-[1] shrink-0 w-[520px] h-[520px] flex items-center justify-center mx-[60px] max-lg:w-[260px] max-lg:h-[260px] max-lg:mx-0 max-lg:mt-10">
+              <div className="relative z-[1] shrink-0 w-[520px] h-[520px] flex items-center justify-center mx-[60px] max-lg:w-[200px] max-lg:h-[200px] max-sm:w-[160px] max-sm:h-[160px] max-lg:mx-0 max-lg:mt-10">
                 <USDaiGlyphSVG
                   className={`w-full h-auto transition-all duration-[1400ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] ${
                     mounted
