@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Tag from "@/components/ui/Tag";
 import Button from "@/components/ui/Button";
 import { EXTERNAL_LINKS } from "@/lib/constants";
+import { useRef, useEffect, useCallback, useMemo } from "react";
 import {
   useInView,
   useCountUp,
@@ -216,6 +217,212 @@ function SUSDaiGlyphSVG({ className }: { className?: string }) {
   );
 }
 
+// ─── Yield Comparison Chart ──────────────────────────────────────────────────
+
+function generateChartData(numPoints: number) {
+  const tbills: number[] = [];
+  const defi: number[] = [];
+  const susdai: number[] = [];
+
+  // Seeded pseudo-random for determinism
+  let seed = 42;
+  const rand = () => {
+    seed = (seed * 16807 + 0) % 2147483647;
+    return seed / 2147483647;
+  };
+
+  // T-Bills: gentle undulation around 4-4.5%
+  let tb = 4.2;
+  for (let i = 0; i < numPoints; i++) {
+    tb += (rand() - 0.5) * 0.15;
+    tb = Math.max(3.8, Math.min(4.7, tb));
+    tbills.push(tb);
+  }
+
+  // DeFi: volatile, jagged, 2-15%
+  let df = 6;
+  for (let i = 0; i < numPoints; i++) {
+    df += (rand() - 0.48) * 2.5;
+    if (rand() < 0.08) df += (rand() - 0.4) * 6; // spikes
+    df = Math.max(1.5, Math.min(16, df));
+    defi.push(df);
+  }
+
+  // sUSDai: smooth, steady 10-15%
+  let su = 12;
+  for (let i = 0; i < numPoints; i++) {
+    su += (rand() - 0.5) * 0.3;
+    su = Math.max(10, Math.min(14.5, su));
+    susdai.push(su);
+  }
+
+  return { tbills, defi, susdai };
+}
+
+const CHART_DATA = generateChartData(70);
+const Y_MAX = 20;
+const Y_LABELS = [0, 5, 10, 15, 20];
+const ANIMATION_DURATION = 2000;
+const SUSDAI_DELAY = 400;
+
+function YieldComparisonChart() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { ref: inViewRef, isInView } = useInView({ threshold: 0.3 });
+  const startTimeRef = useRef<number | null>(null);
+  const rafRef = useRef<number>(0);
+
+  // Merge refs
+  const setRefs = useCallback(
+    (node: HTMLDivElement | null) => {
+      (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      if (typeof inViewRef === "function") {
+        (inViewRef as (node: HTMLDivElement | null) => void)(node);
+      } else if (inViewRef && "current" in inViewRef) {
+        (inViewRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      }
+    },
+    [inViewRef],
+  );
+
+  const drawLine = useCallback(
+    (
+      ctx: CanvasRenderingContext2D,
+      data: number[],
+      color: string,
+      lineWidth: number,
+      progress: number,
+      chartLeft: number,
+      chartTop: number,
+      chartW: number,
+      chartH: number,
+    ) => {
+      const pointsToDraw = Math.floor(data.length * Math.min(progress, 1));
+      if (pointsToDraw < 2) return;
+
+      ctx.beginPath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.lineJoin = "bevel";
+
+      for (let i = 0; i < pointsToDraw; i++) {
+        const x = chartLeft + (i / (data.length - 1)) * chartW;
+        const y = chartTop + chartH - (data[i] / Y_MAX) * chartH;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    },
+    [],
+  );
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    if (!container || !canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+
+    const resize = () => {
+      const rect = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      width = rect.width;
+      height = rect.height;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const observer = new ResizeObserver(resize);
+    observer.observe(container);
+    resize();
+
+    const render = (timestamp: number) => {
+      if (!startTimeRef.current) startTimeRef.current = timestamp;
+      const elapsed = timestamp - startTimeRef.current;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Chart area
+      const chartLeft = 36;
+      const chartTop = 8;
+      const chartW = width - chartLeft - 8;
+      const chartH = height - chartTop - 8;
+
+      // Gridlines + labels
+      ctx.font = "11px system-ui, sans-serif";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+
+      for (const val of Y_LABELS) {
+        const y = chartTop + chartH - (val / Y_MAX) * chartH;
+        ctx.fillStyle = "rgba(0,0,0,0.3)";
+        ctx.fillText(`${val}%`, chartLeft - 6, y);
+        ctx.beginPath();
+        ctx.strokeStyle = "rgba(0,0,0,0.05)";
+        ctx.lineWidth = 1;
+        ctx.moveTo(chartLeft, y);
+        ctx.lineTo(chartLeft + chartW, y);
+        ctx.stroke();
+      }
+
+      // Lines
+      const p1 = elapsed / ANIMATION_DURATION;
+      const p2 = Math.max(0, (elapsed - SUSDAI_DELAY) / ANIMATION_DURATION);
+
+      drawLine(ctx, CHART_DATA.tbills, "#B0ADA8", 2, p1, chartLeft, chartTop, chartW, chartH);
+      drawLine(ctx, CHART_DATA.defi, "#D4D0CC", 2, p1, chartLeft, chartTop, chartW, chartH);
+      drawLine(ctx, CHART_DATA.susdai, "#A99482", 3, p2, chartLeft, chartTop, chartW, chartH);
+
+      if (elapsed < ANIMATION_DURATION + SUSDAI_DELAY) {
+        rafRef.current = requestAnimationFrame(render);
+      }
+    };
+
+    if (isInView) {
+      startTimeRef.current = null;
+      rafRef.current = requestAnimationFrame(render);
+    }
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [isInView, drawLine]);
+
+  return (
+    <div className="mt-12 mb-16">
+      <div
+        ref={setRefs}
+        className="mx-auto"
+        style={{ maxWidth: 800, aspectRatio: "16/9" }}
+      >
+        <canvas ref={canvasRef} className="block w-full h-full" />
+      </div>
+      <div className="flex justify-center gap-6 mt-4 text-[12px] text-text-muted">
+        <span className="flex items-center gap-1.5">
+          <span className="inline-block w-2.5 h-2.5 rounded-[2px]" style={{ background: "#B0ADA8" }} />
+          T-Bills
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="inline-block w-2.5 h-2.5 rounded-[2px]" style={{ background: "#D4D0CC" }} />
+          DeFi Stablecoins
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="inline-block w-2.5 h-2.5 rounded-[2px]" style={{ background: "#A99482" }} />
+          sUSDai
+        </span>
+      </div>
+    </div>
+  );
+}
+
 // ─── Section Components ──────────────────────────────────────────────────────
 
 function HeroMetric({
@@ -414,6 +621,8 @@ function DefineSection() {
           physical backbone of the AI economy.
         </p>
       </div>
+
+      <YieldComparisonChart />
 
       <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-1">
         {DEFINE_STEPS.map((step) => (
