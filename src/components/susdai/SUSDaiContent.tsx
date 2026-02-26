@@ -339,23 +339,23 @@ function YieldComparisonChart() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    const observer = new ResizeObserver(resize);
-    observer.observe(container);
     resize();
 
-    const render = (timestamp: number) => {
-      if (!startTimeRef.current) startTimeRef.current = timestamp;
-      const elapsed = timestamp - startTimeRef.current;
+    // Track whether animation has finished so we can redraw on resize
+    let animationDone = false;
+    let lastP1 = 0;
+    let lastP2 = 0;
 
+    const drawFrame = (p1: number, p2: number) => {
       ctx.clearRect(0, 0, width, height);
 
-      // Chart area
-      const chartLeft = 36;
+      // Chart area — extra bottom for x-axis label
+      const chartLeft = 40;
       const chartTop = 8;
-      const chartW = width - chartLeft - 8;
-      const chartH = height - chartTop - 8;
+      const chartW = width - chartLeft - 12;
+      const chartH = height - chartTop - 28;
 
-      // Gridlines + labels
+      // Gridlines + Y labels
       ctx.font = "11px system-ui, sans-serif";
       ctx.textAlign = "right";
       ctx.textBaseline = "middle";
@@ -372,19 +372,57 @@ function YieldComparisonChart() {
         ctx.stroke();
       }
 
-      // Lines — ease-out cubic for smooth deceleration
-      const easeOut = (t: number) => 1 - Math.pow(1 - Math.min(t, 1), 3);
-      const p1 = easeOut(elapsed / ANIMATION_DURATION);
-      const p2 = easeOut(Math.max(0, (elapsed - SUSDAI_DELAY) / ANIMATION_DURATION));
+      // Y-axis title
+      ctx.save();
+      ctx.font = "10px system-ui, sans-serif";
+      ctx.fillStyle = "rgba(0,0,0,0.35)";
+      ctx.textAlign = "center";
+      ctx.translate(10, chartTop + chartH / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText("APR %", 0, 0);
+      ctx.restore();
 
+      // X-axis title
+      ctx.font = "10px system-ui, sans-serif";
+      ctx.fillStyle = "rgba(0,0,0,0.35)";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      ctx.fillText("Time", chartLeft + chartW / 2, chartTop + chartH + 10);
+
+      // Lines
       drawLine(ctx, CHART_DATA.tbills, "#B0ADA8", 2, p1, chartLeft, chartTop, chartW, chartH);
       drawLine(ctx, CHART_DATA.defi, "#D4D0CC", 2, p1, chartLeft, chartTop, chartW, chartH);
       drawLine(ctx, CHART_DATA.susdai, "#A99482", 3, p2, chartLeft, chartTop, chartW, chartH);
+    };
+
+    const render = (timestamp: number) => {
+      if (!startTimeRef.current) startTimeRef.current = timestamp;
+      const elapsed = timestamp - startTimeRef.current;
+
+      const easeOut = (t: number) => 1 - Math.pow(1 - Math.min(t, 1), 3);
+      lastP1 = easeOut(elapsed / ANIMATION_DURATION);
+      lastP2 = easeOut(Math.max(0, (elapsed - SUSDAI_DELAY) / ANIMATION_DURATION));
+
+      drawFrame(lastP1, lastP2);
 
       if (elapsed < ANIMATION_DURATION + SUSDAI_DELAY) {
         rafRef.current = requestAnimationFrame(render);
+      } else {
+        animationDone = true;
+        lastP1 = 1;
+        lastP2 = 1;
       }
     };
+
+    // Redraw on resize (especially after animation is done)
+    const onResize = () => {
+      resize();
+      if (animationDone) {
+        drawFrame(lastP1, lastP2);
+      }
+    };
+    const resizeObserver = new ResizeObserver(onResize);
+    resizeObserver.observe(container);
 
     if (isInView) {
       startTimeRef.current = null;
@@ -392,7 +430,7 @@ function YieldComparisonChart() {
     }
 
     return () => {
-      observer.disconnect();
+      resizeObserver.disconnect();
       cancelAnimationFrame(rafRef.current);
     };
   }, [isInView, drawLine]);
@@ -610,7 +648,7 @@ function DefineSection() {
     <section className="bg-white py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
       {/* Two-column: text left, chart right — 50/50 split */}
       <div className="grid grid-cols-2 gap-12 items-center mb-16 max-lg:grid-cols-1 max-lg:gap-10">
-        <div>
+        <div className="max-w-[400px]">
           <Tag color="#DBD0C6" className="mb-5">
             What is sUSDai?
           </Tag>
