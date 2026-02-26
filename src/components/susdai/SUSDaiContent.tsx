@@ -399,7 +399,7 @@ function HeroSection() {
 
 function DefineSection() {
   return (
-    <section className="py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
+    <section className="bg-white py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
       <div className="max-w-[560px] mb-16">
         <Tag color="#DBD0C6" className="mb-5">
           What is sUSDai?
@@ -442,52 +442,54 @@ const SECONDARY_SAFEGUARDS = SAFEGUARD_CARDS.slice(2);
 
 function SafeguardsSection() {
   return (
-    <section className="py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <Tag color="#DBD0C6" className="mb-5">
-        Risk Architecture
-      </Tag>
-      <h2 className="font-eiko font-light text-[38px] text-dark leading-[1.15] mb-12 max-w-[550px]">
-        Built to protect depositors first.
-      </h2>
+    <section className="bg-white p-[10px]">
+      <div className="bg-[#2F2823] rounded-[21px] py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
+        <Tag color="#A99482" className="mb-5">
+          Risk Architecture
+        </Tag>
+        <h2 className="font-eiko font-light text-[38px] text-white leading-[1.15] mb-12 max-w-[550px]">
+          Built to protect depositors first.
+        </h2>
 
-      {/* Featured cards */}
-      <div className="grid grid-cols-2 gap-6 mb-6 max-sm:grid-cols-1">
-        {FEATURED_SAFEGUARDS.map((card) => (
-          <div
-            key={card.num}
-            className="border border-feldspar-dust rounded-[12px] py-9 px-8 border-l-[3px] border-l-[#A99482] transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
-          >
-            <span className="font-eiko text-[42px] font-light text-[#A99482] mb-4 block">
-              {card.num}
-            </span>
-            <h4 className="font-eiko text-[22px] font-semibold text-dark mb-3">
-              {card.title}
-            </h4>
-            <p className="text-[14px] text-text-muted leading-[1.7]">
-              {card.description}
-            </p>
-          </div>
-        ))}
-      </div>
+        {/* Featured cards */}
+        <div className="grid grid-cols-2 gap-6 mb-6 max-sm:grid-cols-1">
+          {FEATURED_SAFEGUARDS.map((card) => (
+            <div
+              key={card.num}
+              className="border border-[#A99482] rounded-[12px] py-9 px-8 border-l-[3px] border-l-[#A99482] bg-white/5 transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]"
+            >
+              <span className="font-eiko text-[42px] font-light text-[#A99482] mb-4 block">
+                {card.num}
+              </span>
+              <h4 className="font-eiko text-[22px] font-semibold text-white mb-3">
+                {card.title}
+              </h4>
+              <p className="text-[14px] text-white/50 leading-[1.7]">
+                {card.description}
+              </p>
+            </div>
+          ))}
+        </div>
 
-      {/* Secondary cards */}
-      <div className="grid grid-cols-2 gap-5 max-sm:grid-cols-1">
-        {SECONDARY_SAFEGUARDS.map((card) => (
-          <div
-            key={card.num}
-            className="border border-feldspar-dust rounded-[10px] py-6 px-5 transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
-          >
-            <span className="font-eiko text-[28px] font-light text-feldspar-dust mb-2 block">
-              {card.num}
-            </span>
-            <h4 className="font-eiko text-[17px] font-normal text-dark mb-1.5">
-              {card.title}
-            </h4>
-            <p className="text-[13px] text-text-muted leading-[1.65]">
-              {card.description}
-            </p>
-          </div>
-        ))}
+        {/* Secondary cards */}
+        <div className="grid grid-cols-2 gap-5 max-sm:grid-cols-1">
+          {SECONDARY_SAFEGUARDS.map((card) => (
+            <div
+              key={card.num}
+              className="border border-white/10 rounded-[10px] py-6 px-5 transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.2)]"
+            >
+              <span className="font-eiko text-[28px] font-light text-[#A99482] mb-2 block">
+                {card.num}
+              </span>
+              <h4 className="font-eiko text-[17px] font-normal text-white mb-1.5">
+                {card.title}
+              </h4>
+              <p className="text-[13px] text-white/50 leading-[1.65]">
+                {card.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -495,8 +497,8 @@ function SafeguardsSection() {
 
 function HowToSection() {
   return (
-    <section className="py-20 px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <div className="bg-[#F7F3EE] rounded-[16px] p-12 max-sm:p-7">
+    <section className="bg-white py-20 px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
+      <div>
         <div className="text-center mb-14">
           <h2 className="font-eiko font-light text-[clamp(26px,3vw,36px)] text-dark mb-3">
             How to stake & unstake
@@ -582,14 +584,10 @@ export default function SUSDaiContent() {
   return (
     <>
       <HeroSection />
-
-      <div className="bg-feature-bg">
-        <DefineSection />
-        <SafeguardsSection />
-        <HowToSection />
-        <CTASection />
-      </div>
-
+      <DefineSection />
+      <SafeguardsSection />
+      <HowToSection />
+      <CTASection />
       <Footer />
     </>
   );
