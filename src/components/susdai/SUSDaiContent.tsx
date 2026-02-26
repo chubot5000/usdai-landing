@@ -608,9 +608,9 @@ function HeroSection() {
 function DefineSection() {
   return (
     <section className="bg-white py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      {/* Two-column: text left, chart right */}
-      <div className="flex items-center gap-16 mb-16 max-lg:flex-col max-lg:gap-10">
-        <div className="flex-1 max-w-[480px] shrink-0">
+      {/* Two-column: text left, chart right — 50/50 split */}
+      <div className="grid grid-cols-2 gap-12 items-center mb-16 max-lg:grid-cols-1 max-lg:gap-10">
+        <div>
           <Tag color="#DBD0C6" className="mb-5">
             What is sUSDai?
           </Tag>
@@ -620,15 +620,15 @@ function DefineSection() {
             not speculation.
           </h2>
           <p className="text-[15px] text-text-muted leading-[1.75]">
-            Stake USDai and earn yield backed by GPU-collateralized loans — the
-            physical backbone of the AI economy.
+            sUSDai is a yield-bearing synthetic dollar backed by
+            GPU-collateralized loans — the physical backbone of the AI economy.
+            Stake USDai and earn from real infrastructure demand, not token
+            emissions or leveraged speculation.
           </p>
         </div>
 
-        <div className="flex-1 min-w-0">
-          <div className="border border-feldspar-dust rounded-[16px] p-6 bg-[#FAFAF8]">
-            <YieldComparisonChart />
-          </div>
+        <div className="border border-feldspar-dust rounded-[16px] p-6 bg-[#FAFAF8]">
+          <YieldComparisonChart />
         </div>
       </div>
 
