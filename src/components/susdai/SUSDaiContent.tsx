@@ -262,8 +262,8 @@ function generateChartData(numPoints: number) {
 const CHART_DATA = generateChartData(70);
 const Y_MAX = 20;
 const Y_LABELS = [0, 5, 10, 15, 20];
-const ANIMATION_DURATION = 2000;
-const SUSDAI_DELAY = 400;
+const ANIMATION_DURATION = 800;
+const SUSDAI_DELAY = 200;
 
 function YieldComparisonChart() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -372,9 +372,10 @@ function YieldComparisonChart() {
         ctx.stroke();
       }
 
-      // Lines
-      const p1 = elapsed / ANIMATION_DURATION;
-      const p2 = Math.max(0, (elapsed - SUSDAI_DELAY) / ANIMATION_DURATION);
+      // Lines — ease-out cubic for smooth deceleration
+      const easeOut = (t: number) => 1 - Math.pow(1 - Math.min(t, 1), 3);
+      const p1 = easeOut(elapsed / ANIMATION_DURATION);
+      const p2 = easeOut(Math.max(0, (elapsed - SUSDAI_DELAY) / ANIMATION_DURATION));
 
       drawLine(ctx, CHART_DATA.tbills, "#B0ADA8", 2, p1, chartLeft, chartTop, chartW, chartH);
       drawLine(ctx, CHART_DATA.defi, "#D4D0CC", 2, p1, chartLeft, chartTop, chartW, chartH);
@@ -397,11 +398,11 @@ function YieldComparisonChart() {
   }, [isInView, drawLine]);
 
   return (
-    <div className="mt-12 mb-16">
+    <div>
       <div
         ref={setRefs}
-        className="mx-auto"
-        style={{ maxWidth: 800, aspectRatio: "16/9" }}
+        className="w-full"
+        style={{ aspectRatio: "16/9" }}
       >
         <canvas ref={canvasRef} className="block w-full h-full" />
       </div>
@@ -607,22 +608,29 @@ function HeroSection() {
 function DefineSection() {
   return (
     <section className="bg-white py-[100px] px-20 max-lg:py-[72px] max-lg:px-10 max-sm:py-14 max-sm:px-6">
-      <div className="max-w-[560px] mb-16">
-        <Tag color="#DBD0C6" className="mb-5">
-          What is sUSDai?
-        </Tag>
-        <h2 className="font-eiko font-light text-[38px] text-dark leading-[1.15] mb-[18px]">
-          Yield from compute,
-          <br />
-          not speculation.
-        </h2>
-        <p className="text-[15px] text-text-muted leading-[1.75]">
-          Stake USDai and earn yield backed by GPU-collateralized loans — the
-          physical backbone of the AI economy.
-        </p>
-      </div>
+      {/* Two-column: text left, chart right */}
+      <div className="flex items-center gap-16 mb-16 max-lg:flex-col max-lg:gap-10">
+        <div className="flex-1 max-w-[480px] shrink-0">
+          <Tag color="#DBD0C6" className="mb-5">
+            What is sUSDai?
+          </Tag>
+          <h2 className="font-eiko font-light text-[38px] text-dark leading-[1.15] mb-[18px]">
+            Yield from compute,
+            <br />
+            not speculation.
+          </h2>
+          <p className="text-[15px] text-text-muted leading-[1.75]">
+            Stake USDai and earn yield backed by GPU-collateralized loans — the
+            physical backbone of the AI economy.
+          </p>
+        </div>
 
-      <YieldComparisonChart />
+        <div className="flex-1 min-w-0">
+          <div className="border border-feldspar-dust rounded-[16px] p-6 bg-[#FAFAF8]">
+            <YieldComparisonChart />
+          </div>
+        </div>
+      </div>
 
       <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-1">
         {DEFINE_STEPS.map((step) => (
