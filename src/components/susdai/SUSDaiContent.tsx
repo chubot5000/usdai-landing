@@ -495,10 +495,10 @@ function HeroMetric({
 
   return (
     <div>
-      <div className="text-[10px] font-semibold tracking-[1.8px] uppercase text-secondary mb-1.5">
+      <div className="text-[10px] max-sm:text-[8px] font-semibold tracking-[1.8px] max-sm:tracking-[1px] uppercase text-secondary mb-1.5">
         {label}
       </div>
-      <div className="font-eiko text-[28px] font-light text-dark">
+      <div className="font-eiko text-[28px] max-sm:text-[18px] font-light text-dark">
         {displayValue}
       </div>
     </div>
@@ -548,7 +548,7 @@ function HeroSection() {
           }}
         />
 
-        <div className="relative w-full h-full px-4 sm:px-8 md:px-[60px] lg:px-[100px] flex flex-col z-10 pt-[80px] max-sm:pt-[70px]">
+        <div className="relative w-full h-full px-4 sm:px-8 md:px-[60px] lg:px-[100px] flex flex-col z-10 pt-[80px] max-sm:pt-[70px] max-sm:pb-10">
           <div className="flex-1 flex flex-col justify-center">
             <div
               ref={ref as React.RefObject<HTMLDivElement>}
@@ -572,29 +572,8 @@ function HeroSection() {
                   economy.
                 </p>
 
-                <div className="flex gap-3.5 mb-[72px] max-sm:flex-col max-sm:mb-8">
-                  <Button
-                    href={EXTERNAL_LINKS.app}
-                    external
-                    size="lg"
-                    className="px-8 py-3.5 text-[15px]"
-                  >
-                    Stake USDai &rarr;
-                  </Button>
-                  <Button
-                    href={EXTERNAL_LINKS.susdaiOverview}
-                    external
-                    variant="ghost"
-                    size="lg"
-                    pageVariant="dark"
-                    className="px-8 py-3.5 text-[15px]"
-                  >
-                    How It Works
-                  </Button>
-                </div>
-
                 {/* Metrics */}
-                <div className="flex gap-14 pt-8 border-t border-dark/10 flex-wrap max-sm:gap-5 max-sm:gap-y-4">
+                <div className="grid grid-cols-4 gap-8 pt-8 border-t border-dark/10 max-sm:grid-cols-4 max-sm:gap-4">
                   <HeroMetric
                     label="Current APR"
                     isInView={isInView}
@@ -623,10 +602,32 @@ function HeroSection() {
                     useComma
                   />
                 </div>
+
+                {/* Buttons — below metrics on mobile */}
+                <div className="flex gap-3.5 mt-10 max-sm:flex-col">
+                  <Button
+                    href={EXTERNAL_LINKS.app}
+                    external
+                    size="lg"
+                    className="px-8 py-3.5 text-[15px]"
+                  >
+                    Stake USDai &rarr;
+                  </Button>
+                  <Button
+                    href={EXTERNAL_LINKS.susdaiOverview}
+                    external
+                    variant="ghost"
+                    size="lg"
+                    pageVariant="dark"
+                    className="px-8 py-3.5 text-[15px]"
+                  >
+                    How It Works
+                  </Button>
+                </div>
               </div>
 
-              {/* Right glyph */}
-              <div className="relative z-[1] shrink-0 w-[520px] h-[520px] flex items-center justify-center mx-[60px] max-lg:w-[200px] max-lg:h-[200px] max-sm:w-[160px] max-sm:h-[160px] max-lg:mx-0 max-lg:mt-10">
+              {/* Right glyph — hidden on mobile */}
+              <div className="relative z-[1] shrink-0 w-[520px] h-[520px] flex items-center justify-center mx-[60px] max-lg:w-[200px] max-lg:h-[200px] max-lg:mx-0 max-lg:mt-10 max-sm:hidden">
                 <SUSDaiGlyphSVG
                   className={`w-full h-auto transition-all duration-[1400ms] cubic-bezier(0.16,1,0.3,1) ${
                     mounted
