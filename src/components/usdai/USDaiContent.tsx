@@ -454,28 +454,9 @@ function HeroSection() {
                   redeemable, deeply liquid, and composable across DeFi and
                   CeFi.
                 </p>
-                <div className="flex gap-3.5 mb-[72px] max-sm:flex-col max-sm:mb-10">
-                  <Button
-                    href={EXTERNAL_LINKS.app}
-                    external
-                    size="lg"
-                    className="px-8 py-3.5 text-[15px]"
-                  >
-                    Get USDai &rarr;
-                  </Button>
-                  <Button
-                    href={EXTERNAL_LINKS.susdaiOverview}
-                    external
-                    variant="ghost"
-                    size="lg"
-                    className="px-8 py-3.5 text-[15px]"
-                  >
-                    How It Works
-                  </Button>
-                </div>
 
                 {/* Metrics */}
-                <div className="flex gap-14 pt-8 border-t border-white/6 max-sm:grid max-sm:grid-cols-4 max-sm:gap-3">
+                <div className="flex gap-14 pt-8 border-t border-white/6 mb-10 max-sm:grid max-sm:grid-cols-4 max-sm:gap-3">
                   <HeroMetric
                     label="Total Deposits"
                     isInView={isInView}
@@ -501,6 +482,27 @@ function HeroSection() {
                     isInView={isInView}
                     staticValue="1:1"
                   />
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-3.5 max-sm:flex-col">
+                  <Button
+                    href={EXTERNAL_LINKS.app}
+                    external
+                    size="lg"
+                    className="px-8 py-3.5 text-[15px]"
+                  >
+                    Get USDai &rarr;
+                  </Button>
+                  <Button
+                    href={EXTERNAL_LINKS.susdaiOverview}
+                    external
+                    variant="ghost"
+                    size="lg"
+                    className="px-8 py-3.5 text-[15px]"
+                  >
+                    How It Works
+                  </Button>
                 </div>
               </div>
 

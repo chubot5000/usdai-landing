@@ -572,29 +572,8 @@ function HeroSection() {
                   economy.
                 </p>
 
-                <div className="flex gap-3.5 mb-[72px] max-sm:flex-col max-sm:mb-10">
-                  <Button
-                    href={EXTERNAL_LINKS.app}
-                    external
-                    size="lg"
-                    className="px-8 py-3.5 text-[15px]"
-                  >
-                    Stake USDai &rarr;
-                  </Button>
-                  <Button
-                    href={EXTERNAL_LINKS.susdaiOverview}
-                    external
-                    variant="ghost"
-                    size="lg"
-                    pageVariant="dark"
-                    className="px-8 py-3.5 text-[15px]"
-                  >
-                    How It Works
-                  </Button>
-                </div>
-
                 {/* Metrics */}
-                <div className="flex gap-14 pt-8 border-t border-dark/10 max-sm:grid max-sm:grid-cols-4 max-sm:gap-3">
+                <div className="flex gap-14 pt-8 border-t border-dark/10 mb-10 max-sm:grid max-sm:grid-cols-4 max-sm:gap-3">
                   <HeroMetric
                     label="Current APR"
                     isInView={isInView}
@@ -622,6 +601,28 @@ function HeroSection() {
                     decimals={0}
                     useComma
                   />
+                </div>
+
+                {/* Buttons */}
+                <div className="flex gap-3.5 max-sm:flex-col">
+                  <Button
+                    href={EXTERNAL_LINKS.app}
+                    external
+                    size="lg"
+                    className="px-8 py-3.5 text-[15px]"
+                  >
+                    Stake USDai &rarr;
+                  </Button>
+                  <Button
+                    href={EXTERNAL_LINKS.susdaiOverview}
+                    external
+                    variant="ghost"
+                    size="lg"
+                    pageVariant="dark"
+                    className="px-8 py-3.5 text-[15px]"
+                  >
+                    How It Works
+                  </Button>
                 </div>
               </div>
 
