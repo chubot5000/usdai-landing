@@ -510,7 +510,7 @@ function HeroSection() {
   const { ref, isInView } = useInView({ threshold: 0.3 });
 
   return (
-    <section className="relative w-full min-h-screen max-sm:min-h-0 bg-white p-[10px]">
+    <section className="relative w-full h-screen min-h-[600px] bg-white p-[10px]">
       {/* Nav above overflow-hidden container */}
       <div className="absolute top-[10px] left-[10px] right-[10px] z-20 px-4 sm:px-8 md:px-[60px] lg:px-[100px]">
         <div className="hidden lg:block">
@@ -548,11 +548,11 @@ function HeroSection() {
           }}
         />
 
-        <div className="relative w-full h-full px-4 sm:px-8 md:px-[60px] lg:px-[100px] flex flex-col z-10 pt-[80px] max-sm:pt-[70px] max-sm:pb-10">
+        <div className="relative w-full h-full px-4 sm:px-8 md:px-[60px] lg:px-[100px] flex flex-col z-10">
           <div className="flex-1 flex flex-col justify-center">
             <div
               ref={ref as React.RefObject<HTMLDivElement>}
-              className="flex flex-row items-center justify-between w-full gap-10 max-lg:gap-6 max-sm:gap-4 max-lg:flex-col"
+              className="flex flex-row items-center justify-between w-full gap-10 max-lg:flex-col"
             >
               {/* Left content */}
               <div className="relative z-[1] flex-1 max-w-[600px]">
@@ -572,8 +572,29 @@ function HeroSection() {
                   economy.
                 </p>
 
+                <div className="flex gap-3.5 mb-[72px] max-sm:flex-col max-sm:mb-10">
+                  <Button
+                    href={EXTERNAL_LINKS.app}
+                    external
+                    size="lg"
+                    className="px-8 py-3.5 text-[15px]"
+                  >
+                    Stake USDai &rarr;
+                  </Button>
+                  <Button
+                    href={EXTERNAL_LINKS.susdaiOverview}
+                    external
+                    variant="ghost"
+                    size="lg"
+                    pageVariant="dark"
+                    className="px-8 py-3.5 text-[15px]"
+                  >
+                    How It Works
+                  </Button>
+                </div>
+
                 {/* Metrics */}
-                <div className="grid grid-cols-4 gap-8 pt-8 border-t border-dark/10 max-sm:grid-cols-4 max-sm:gap-4">
+                <div className="flex gap-14 pt-8 border-t border-dark/10 max-sm:grid max-sm:grid-cols-4 max-sm:gap-3">
                   <HeroMetric
                     label="Current APR"
                     isInView={isInView}
@@ -602,32 +623,10 @@ function HeroSection() {
                     useComma
                   />
                 </div>
-
-                {/* Buttons — below metrics on mobile */}
-                <div className="flex gap-3.5 mt-10 max-sm:flex-col">
-                  <Button
-                    href={EXTERNAL_LINKS.app}
-                    external
-                    size="lg"
-                    className="px-8 py-3.5 text-[15px]"
-                  >
-                    Stake USDai &rarr;
-                  </Button>
-                  <Button
-                    href={EXTERNAL_LINKS.susdaiOverview}
-                    external
-                    variant="ghost"
-                    size="lg"
-                    pageVariant="dark"
-                    className="px-8 py-3.5 text-[15px]"
-                  >
-                    How It Works
-                  </Button>
-                </div>
               </div>
 
-              {/* Right glyph — hidden on mobile */}
-              <div className="relative z-[1] shrink-0 w-[520px] h-[520px] flex items-center justify-center mx-[60px] max-lg:w-[200px] max-lg:h-[200px] max-lg:mx-0 max-lg:mt-10 max-sm:hidden">
+              {/* Right glyph */}
+              <div className="relative z-[1] shrink-0 w-[520px] h-[520px] flex items-center justify-center mx-[60px] max-lg:w-[260px] max-lg:h-[260px] max-lg:mx-0 max-lg:mt-10 max-sm:hidden">
                 <SUSDaiGlyphSVG
                   className={`w-full h-auto transition-all duration-[1400ms] cubic-bezier(0.16,1,0.3,1) ${
                     mounted
