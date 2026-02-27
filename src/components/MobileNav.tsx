@@ -71,30 +71,26 @@ export default function MobileNav({
 
       {/* Dropdown Menu */}
       <div
-        className={`absolute top-full left-0 right-0 mt-4 rounded-[10px] overflow-y-auto max-h-[90vh] transition-all duration-300 ${
+        className={`absolute top-full left-0 right-0 mt-4 rounded-[10px] overflow-y-auto max-h-[90vh] transition-all duration-300 border shadow-[0_8px_32px_rgba(0,0,0,0.25)] ${
           isOpen
             ? "opacity-100 visible translate-y-0"
             : "opacity-0 invisible -translate-y-2"
-        } ${isDark ? "bg-white shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-[#2f2823]/10" : "border border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.25)]"}`}
-        style={
-          isDark
-            ? undefined
-            : {
-                backgroundColor: "rgba(255, 255, 255, 0.15)",
-                backdropFilter: "blur(20px)",
-                WebkitBackdropFilter: "blur(20px)",
-              }
-        }
+        } ${isDark ? "border-[#2f2823]/10" : "border-white/15"}`}
+        style={{
+          backgroundColor: isDark ? "rgba(255, 255, 255, 0.75)" : "rgba(255, 255, 255, 0.15)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+        }}
       >
         <nav className="flex flex-col p-3 gap-0.5">
           {NAV_ITEMS_COLLAPSED.map((item) => {
             if (item.children) {
               return (
                 <div key={item.label}>
-                  {/* Section Header - always a plain label */}
+                  {/* Section Header */}
                   <div
-                    className={`pt-2.5 pb-0.5 px-3 text-[10px] uppercase tracking-[1px] font-semibold ${
-                      isDark ? "text-[#1d1a19]/30" : "text-white/30"
+                    className={`pt-3 pb-1 px-3 font-eiko text-[18px] font-light ${
+                      isDark ? "text-[#1d1a19]" : "text-white"
                     }`}
                   >
                     {item.label}
@@ -102,11 +98,6 @@ export default function MobileNav({
                   {/* Sub-items in 2-col grid, with overview link promoted as first child */}
                   <div className="grid grid-cols-2 gap-x-1 gap-y-0.5">
                     {(() => {
-                      const overviewDescs: Record<string, string> = {
-                        Deposit: "Earn yield on stablecoins",
-                        Borrow: "AI infrastructure financing",
-                        Insights: "Research, updates & analysis",
-                      };
                       const overviewLabel =
                         item.label === "Insights"
                           ? "All Insights"
@@ -116,7 +107,7 @@ export default function MobileNav({
                             {
                               label: overviewLabel,
                               href: item.topLevelHref,
-                              description: overviewDescs[item.label] || "",
+                              description: "",
                               external: item.external,
                             },
                             ...item.children!,
@@ -125,27 +116,11 @@ export default function MobileNav({
 
                       return allChildren.map((child, i) => {
                         const colorClasses = isDark
-                          ? "text-[#1d1a19]"
-                          : "text-white";
+                          ? "text-[#1d1a19]/70"
+                          : "text-white/70";
                         const hoverClasses = isDark
-                          ? "hover:bg-[#1d1a19]/5"
-                          : "hover:bg-white/5";
-                        const descClasses = isDark
-                          ? "text-[#1d1a19]/35"
-                          : "text-white/35";
-
-                        const content = (
-                          <>
-                            {child.label}
-                            {child.description && (
-                              <span
-                                className={`block text-[11px] mt-0.5 leading-tight ${descClasses}`}
-                              >
-                                {child.description}
-                              </span>
-                            )}
-                          </>
-                        );
+                          ? "hover:bg-[#1d1a19]/5 hover:text-[#1d1a19]"
+                          : "hover:bg-white/5 hover:text-white";
 
                         if (child.external) {
                           return (
@@ -155,9 +130,9 @@ export default function MobileNav({
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={() => setIsOpen(false)}
-                              className={`block py-2 px-3 text-[14px] rounded-[6px] transition-colors ${colorClasses} ${hoverClasses}`}
+                              className={`block py-1.5 px-3 text-[13px] rounded-[6px] transition-colors ${colorClasses} ${hoverClasses}`}
                             >
-                              {content}
+                              {child.label}
                             </a>
                           );
                         }
@@ -167,9 +142,9 @@ export default function MobileNav({
                             key={`${child.href}-${i}`}
                             href={child.href}
                             onClick={() => setIsOpen(false)}
-                            className={`block py-2 px-3 text-[14px] rounded-[6px] transition-colors ${colorClasses} ${hoverClasses}`}
+                            className={`block py-1.5 px-3 text-[13px] rounded-[6px] transition-colors ${colorClasses} ${hoverClasses}`}
                           >
-                            {content}
+                            {child.label}
                           </Link>
                         );
                       });
